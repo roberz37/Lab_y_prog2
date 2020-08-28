@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1598624526 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\cilindro.c
+
+1598626878 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\circulo.c
+	"circulo.h"
+
+1598624509 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\esfera.c
+
+1598624490 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\pentagono.c
+
+1598627649 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\triangulo.c
+	"triangulo.h"
+
+1598626927 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\cuadrado.c
+	"cuadrado.h"
+
+1598626929 c:\users\pc\desktop\facultad\prog y lab 1\repasotad\cuadrado.h
+
+1598627733 source:c:\users\pc\desktop\facultad\prog y lab 1\repasotad\main.c
+	<stdio.h>
+	<stdlib.h>
+	"cuadrado.h"
+	"circulo.h"
+	"triangulo.h"
+
+1598626877 c:\users\pc\desktop\facultad\prog y lab 1\repasotad\circulo.h
+
+1598627754 c:\users\pc\desktop\facultad\prog y lab 1\repasotad\triangulo.h
+
