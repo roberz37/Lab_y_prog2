@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1598363075 source:/home/roberz/Prog-Lab2/Clase1/main.c
-	<stdio.h>
-	<stdlib.h>
-	"paraclase1.h"
-
-1598278162 /home/roberz/Prog-Lab2/Clase1/paraclase1.h
-
