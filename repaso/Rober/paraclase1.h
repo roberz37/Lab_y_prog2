@@ -7,6 +7,10 @@ typedef struct {
 
 } ST_PERSONAS;
 
+typedef struct {
+    char nombre[20];
+    int legajo;
+} ST_EMPLEADO;
 
 
 
