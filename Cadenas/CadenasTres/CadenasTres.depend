@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1598913333 source:c:\users\pc\desktop\facultad\lab_y_prog2\cadenasdos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1599090017 source:c:\users\pc\desktop\facultad\lab_y_prog2\cadenas\cadenasdos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
