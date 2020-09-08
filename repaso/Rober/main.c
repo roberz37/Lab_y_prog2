@@ -104,16 +104,16 @@ int main()
     ST_EMPLEADO empleado;
 
     int i=0, menorLegajo, tramiteS=0, tramiteV=0, tramiteM=0;
-    char primerPersona[20], tipoTramite;
+    char primerPersona[20], tipoTramite=NULL;
 
     do {
         printf("Para terminar ingrese la palabra 'NO'\n");
         printf("Ingrese el nombre de la persona: ");
         scanf("%s", empleado.nombre);
+        fpurge(stdin);
         if (strcmp("no", empleado.nombre )!= 0){
             printf("Ingrese el legajo de la persona: ");
             scanf("%d", &empleado.legajo);
-            fflush(stdin);
             printf("Ingrese el tipo de tramite: ");
             scanf("%c", &tipoTramite);
 
