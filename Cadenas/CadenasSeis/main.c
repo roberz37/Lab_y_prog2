@@ -19,6 +19,7 @@ int main(){
     printf("La palabra mas larga es %s tiene %d caracteres.\n", palabra, contarCaracteres(palabra));
 
     return 0;
+
 }
 
 int contarPalabras(const char *cadena){
