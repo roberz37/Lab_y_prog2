@@ -2,50 +2,59 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *formatearNumero(char*);
+void formatearNumero(char*, char*);
 
 int main(){
 
     char *numero = (char*)malloc(sizeof(char)*81);
-    //char *cambio = (char*)malloc(sizeof(char)*3);
+    char *cambio = (char*)malloc(sizeof(char)*3);
     printf("Ingrese un numero\n");
     scanf("%s", numero);
-    /*printf("Ingrese el tipo de cambio\n");
-    scanf("%s", cambio);*/
-
-    printf("Su cadena formatea es: %s\n", formatearNumero(numero));
+    printf("Ingrese el tipo de cambio\n");
+    scanf("%s", cambio);
+    formatearNumero(numero, cambio);
+    printf("Su cadena formatea es: %s\n", numero);
 
     return 0;
 }
 
-char *formatearNumero(char *numero){
-    char *aux = (char*)malloc(sizeof(char)*81);
-    aux = numero;
-    while(*numero != '\0'){
-        if(*numero == ','){
-            *numero = '.';
-            numero++;
+void formatearNumero(char *numero, char *cambio){
+    int i = 0;
+    int ultimo = 0;
+    while(*(numero + i) != '\0'){
+        if(*(numero + i)== ',' || *(numero + i)== '.'){
+            ultimo = i;
+            i++;
         }
-        if(*numero == '.'){
-            *numero = ',';
-            numero++;
-        }
-        numero++;
+        i++;
     }
-    *numero='\0';
-    return aux;
-}
-    /*if(strcmp(cambio, "EN") == 0)´{
-        while(numero){
-            if(strcmp(numero, ",")==0){
-                *aux = ".";
-                aux++;
+    i = 0;
+    if(strcmp(cambio, "AR") == 0 && *(numero + ultimo) != ','){
+        while(*(numero + i) != '\0'){
+            if(*(numero + i)== ','){
+                *(numero + i)= '.';
+                i++;
             }
-            if(strcmp(numero, ".") == 0){
-                *aux = ",";
-                aux++;
+            if(*(numero + i)== '.'){
+                *(numero + i)= ',';
+                i++;
             }
-            *aux = *numero;
-            aux++;
+            i++;
         }
-    }*/
+        *(numero + i)='\0';
+    }
+    if(strcmp(cambio, "EN") == 0 && *(numero + ultimo) != '.'){
+           while(*(numero + i) != '\0'){
+            if(*(numero + i)== ','){
+                *(numero + i)= '.';
+                i++;
+            }
+            if(*(numero + i)== '.'){
+                *(numero + i)= ',';
+                i++;
+            }
+            i++;
+        }
+        *(numero + i)='\0';
+    }
+}

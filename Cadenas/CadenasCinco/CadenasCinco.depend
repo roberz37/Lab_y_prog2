@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1599660610 source:c:\users\pc\desktop\facultad\lab_y_prog2\cadenas\cadenascinco\main.c
+	<stdio.h>
+	<stdlib.h>
+

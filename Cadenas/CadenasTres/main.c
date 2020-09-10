@@ -6,9 +6,10 @@ bool esIp(char *ip);
 
 int main()
 {
-    char ip[16] = "192.168.1.223";
+    char *ip = (char*) malloc(sizeof(char)*16);
+    strcpy(ip, "211.231.3.514");
 
-    if(esIp(ip)){
+    if(esIp(ip) == true){
         printf("El numero de ip: %s es valido.\n", ip);
     }else{
         printf("El numero de ip: %s no es valido.\n", ip);
@@ -18,22 +19,23 @@ int main()
 
 bool esIp(char *ip){
     int i = 0;
-    int cantDigitos = 0;
-    int cantSublotes = 0;
-    while(*(ip + 1) != '\0'){
-        cantDigitos = 0;
-        while(*(ip+i) != '\0' && *(ip+i) != '.'){
-            if(*(ip + i) >= 0 && *(ip +i) <= 9){
-            cantDigitos++;
-        }else{
+    int digitos =0;
+    int lotes = 0;
+    while(*(ip + i) != '\0'){
+        digitos = 0;
+        while(*(ip + i) != '\0' && *(ip + i) != '.'){
+            if(*(ip + i) >= '0' && *(ip + i) <= '9'){
+                digitos++;
+            }else{
+                return false;
+            }
+            i++;
+        }
+        if(digitos>= 4 || digitos == 0){
             return false;
         }
+        lotes++;
         i++;
-        }
-        if(cantDigitos >= 4 || cantDigitos == 0){
-            return false;
-        }
-        cantSublotes++;
     }
-    return cantSublotes == 4;
+    return lotes == 4;
 }
