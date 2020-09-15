@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1599835137 source:c:\users\pc\desktop\facultad\lab_y_prog2\cadenas\cadenassiete\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+

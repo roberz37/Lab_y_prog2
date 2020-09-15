@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1599836646 source:c:\users\pc\desktop\facultad\lab_y_prog2\cadenas\cadenasocho\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
