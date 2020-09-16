@@ -10,15 +10,13 @@ typedef struct{
     char nombre[26];
 }Alumno;
 
+FILE *abrir(const char *, const char *);
+
 int main(){
-    FILE *archivoUno = fopen("DIAFINALES.DAT", "rb");
-    FILE *archivoDos = fopen("MATFINALES.DAT", "wb");
-    int codigo;
     Alumno alumno;
-    if(archivoUno == NULL || archivoUno == NULL){
-        printf("No se pudo abrir el archivo!");
-        exit(EXIT_FAILURE);
-    }
+    int codigo;
+    FILE *archivoUno = abrir("../ArchivosSeis/DIAFINALES.DAT", "rb");
+    FILE *archivoDos = abrir("MATFINALES.DAT", "wb");
     printf("Ingrese el codigo de materia\n");
     scanf("%d", &codigo);
     fread(&alumno, sizeof(alumno), 1, archivoUno);
@@ -32,3 +30,13 @@ int main(){
     fclose(archivoDos);
     return 0;
 }
+
+FILE *abrir(const char *fileName, const char *modo){
+    FILE *file = fopen(fileName, modo);
+    if (file == NULL){
+        fprintf(stderr, "No se pudo abrir el archivo: %s", fileName);
+        exit(EXIT_FAILURE);
+    }
+    return file;
+}
+

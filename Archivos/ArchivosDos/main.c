@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct{
     int legajo;
     float promedio;
@@ -18,6 +19,7 @@ int main()
         printf("No se pudo abrir el archivo!\n");
         exit(EXIT_FAILURE);
     }
+    fprintf(archivoDos, "Listado de alumnos aprobados\n");
     while(fscanf(archivoUno, "%d%f\n", &alumno.legajo, &alumno.promedio) != EOF){
         if(alumno.promedio >= 6){
             fprintf(archivoDos, "%08d %.2f\n", alumno.legajo, alumno.promedio);

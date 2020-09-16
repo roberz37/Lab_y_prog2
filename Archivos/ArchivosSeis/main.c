@@ -10,16 +10,13 @@ typedef struct{
     char nombre[26];
 }Alumno;
 
+FILE *abrir(const char *, const char *);
+
 int main(){
     Alumno alumno;
-    FILE *archivo = fopen("DIAFINALES.DAT", "wb");
-    if(archivo == NULL){
-        printf("No se pudo abrir el archivo!");
-        exit(EXIT_FAILURE);
-    }
+    FILE *archivo = abrir("DIAFINALES.DAT", "wb");
     printf("Ingrese el nombre\n");
     gets(alumno.nombre);
-    fflush(stdin);
     while(*(alumno.nombre) != '\0'){
         printf("Ingrese el numero de legajo\n");
         scanf("%d", &alumno.legajo);
@@ -35,8 +32,16 @@ int main(){
         fwrite(&alumno, sizeof(Alumno),1, archivo);
         printf("Ingrese el nombre\n");
         gets(alumno.nombre);
-
     }
     fclose(archivo);
     return 0;
+}
+
+FILE *abrir(const char *fileName, const char *modo){
+    FILE *file = fopen(fileName, modo);
+    if (file == NULL){
+        fprintf(stderr, "No se pudo abrir el archivo: %s", fileName);
+        exit(EXIT_FAILURE);
+    }
+    return file;
 }
