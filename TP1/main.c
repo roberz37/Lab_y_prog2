@@ -16,6 +16,7 @@ bool contraseniaValida(char*);
 bool esAlfanumerico(char);
 Usuario login(char*, char*, FILE*);
 int busquedaBinaria(char *, FILE *);
+void discardChars();
 
 int main(){
 
@@ -26,18 +27,31 @@ int main(){
     FILE *fileUsersTxt = abrir("users.txt", "r");
     FILE *fileUserBin = abrir("users.dat", "wb");
     FILE *fileRejectedTxt = abrir("rejected.txt", "w");
-    while(fscanf(fileUsersTxt,"%s;%s;%s", nombre,email, contrasenia ) != EOF){
+
+    /*printf("Ingrese nombre\n");
+    gets(nombre);
+    while(strcmp(nombre, "")!=0){
+        printf("Ingrese el email\n");
+        scanf("%s", email);
+        printf("Ingrese contrasenia\n");
+        scanf("%s", contrasenia);
+        discardChars();
+        fprintf(fileUsersTxt,"%s;%s;%s\n", nombre, email, contrasenia);
+        printf("Ingrese nombre\n");
+        gets(nombre);
+    }*/
+    while(fscanf(fileUsersTxt,"%s;%s;%s\n", nombre,email, contrasenia ) != EOF){
         if(nombreValido(nombre) && emailValido(email) && contraseniaValida(contrasenia)){
             strcpy(usuario.nombreUsuario,nombre);
             strcpy(usuario.email, email);
             strcpy(usuario.contrasenia, contrasenia);
             fwrite(&usuario, sizeof(Usuario), 1, fileUserBin);
         }else{
-            fprintf(fileRejectedTxt, "%s;%s;%s", nombre, email, contrasenia);
+            fprintf(fileRejectedTxt, "%s;%s;%s\n", nombre, email, contrasenia);
         }
     }
     printf("Ingrese su email\n");
-    scanf("%s", email);
+    gets(email);
     usuario = login(email, contrasenia, fileUserBin);
     if(strcmp(usuario.nombreUsuario, "")==0){
         printf("No encontro el usuario brou\n");
@@ -135,4 +149,10 @@ Usuario login(char *email, char *contrasenia, FILE *archivoBin){
         medio = (primero+ultimo)/2;
     }
     return -1;
+ }
+
+ void discardChars(){
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    return;
  }
