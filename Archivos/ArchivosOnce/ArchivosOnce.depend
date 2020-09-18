@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1600401832 source:c:\users\pc\desktop\facultad\lab_y_prog2\archivos\archivosonce\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

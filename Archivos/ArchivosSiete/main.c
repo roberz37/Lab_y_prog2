@@ -19,12 +19,12 @@ int main(){
     FILE *archivoDos = abrir("MATFINALES.DAT", "wb");
     printf("Ingrese el codigo de materia\n");
     scanf("%d", &codigo);
-    fread(&alumno, sizeof(alumno), 1, archivoUno);
+    fread(&alumno, sizeof(Alumno), 1, archivoUno);
     while(!feof(archivoUno)){
         if(alumno.materia == codigo){
-            fwrite(&alumno, sizeof(alumno), 1, archivoDos);
+            fwrite(&alumno, sizeof(Alumno), 1, archivoDos);
         }
-        fread(&alumno, sizeof(alumno), 1, archivoUno);
+        fread(&alumno, sizeof(Alumno), 1, archivoUno);
     }
     fclose(archivoUno);
     fclose(archivoDos);

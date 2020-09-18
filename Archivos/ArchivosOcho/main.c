@@ -17,10 +17,10 @@ int main(){
     Alumno alumno;
     FILE *archivoTxt = abrir("LISTADO.TXT","w");
     FILE *archivoBin = abrir("../ArchivosSeis/DIAFINALES.DAT", "rb");
-    fprintf(archivoTxt, "Legajo\tNombre\tFecha\tCodigo de materia\n");
+    fprintf(archivoTxt, "Legajo\t\tNombre\t\tFecha\t\tCodigo de materia\n");
     fread(&alumno, sizeof(Alumno), 1, archivoBin);
     while(!feof(archivoBin)){
-        fprintf(archivoTxt, "%d\t%s\t%02d/%02d/%02d\t%d\n", alumno.legajo, alumno.nombre, alumno.dia, alumno.mes, ((alumno.anio) % 100), alumno.materia);
+        fprintf(archivoTxt, "%08d\t%-10s\t%02d/%02d/%02d\t%08d\n", alumno.legajo, alumno.nombre, alumno.dia, alumno.mes, alumno.anio, alumno.materia);
         fread(&alumno, sizeof(Alumno), 1, archivoBin);
     }
     fclose(archivoTxt);
