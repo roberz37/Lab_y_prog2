@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+
 typedef struct{
     char nombreUsuario[16];
     char email[16];
@@ -13,8 +14,8 @@ bool nombreValido(char*);
 bool emailValido(char*);
 bool contraseniaValida(char*);
 bool esAlfanumerico(char);
-Usuario login(char*, char*);
-
+Usuario login(char*, char*, FILE*);
+int busquedaBinaria(char *, FILE *);
 
 int main(){
 
@@ -25,7 +26,6 @@ int main(){
     FILE *fileUsersTxt = abrir("users.txt", "r");
     FILE *fileUserBin = abrir("users.dat", "wb");
     FILE *fileRejectedTxt = abrir("rejected.txt", "w");
-
     while(fscanf(fileUsersTxt,"%s;%s;%s", nombre,email, contrasenia ) != EOF){
         if(nombreValido(nombre) && emailValido(email) && contraseniaValida(contrasenia)){
             strcpy(usuario.nombreUsuario,nombre);
@@ -35,6 +35,14 @@ int main(){
         }else{
             fprintf(fileRejectedTxt, "%s;%s;%s", nombre, email, contrasenia);
         }
+    }
+    printf("Ingrese su email\n");
+    scanf("%s", email);
+    usuario = login(email, contrasenia, fileUserBin);
+    if(strcmp(usuario.nombreUsuario, "")==0){
+        printf("No encontro el usuario brou\n");
+    }else{
+        printf("Email y contraseña validos");
     }
     fclose(fileUsersTxt);
     fclose(fileUserBin);
@@ -87,10 +95,44 @@ bool esAlfanumerico(char letra){
     return letra >= '0' && letra <= '9' && letra >= 'a' && letra <= 'z';
 }
 
-Usuario login(char *email, char *contrasenia){
-
+Usuario login(char *email, char *contrasenia, FILE *archivoBin){
+    Usuario usuario;
+    int pos = busquedaBinaria(email, archivoBin);
+    if(pos < 0){
+        strcpy(usuario.nombreUsuario, "");
+        strcpy(usuario.email, "");
+        strcpy(usuario.contrasenia, "");
+        return usuario;
+    }else{
+        fseek(archivoBin, pos*sizeof(Usuario), SEEK_SET);
+        fread(&usuario, sizeof(Usuario), 1, archivoBin);
+        return usuario;
+    }
 }
 
+ int busquedaBinaria(char *email, FILE *archivoBin){
 
+    Usuario usuario;
+    long primero=0;
+    fseek(archivoBin,0,SEEK_END);
+    long ultimo=ftell(archivoBin);
+    long medio=(primero+ultimo)/(sizeof(Usuario)*2);
+    ultimo = ultimo/sizeof(Usuario);
 
+    while (primero<=ultimo){
+        fseek(archivoBin, sizeof(Usuario)*medio, SEEK_SET);
+        fread(&usuario,sizeof(Usuario),1, archivoBin);
 
+        if (strcmp(usuario.email, email) < 0) {
+            primero=medio+1;
+
+        } else if (strcmp(usuario.email, email) == 0){
+            return medio;
+        }
+        else {
+            ultimo = medio - 1;
+        }
+        medio = (primero+ultimo)/2;
+    }
+    return -1;
+ }
