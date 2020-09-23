@@ -17,7 +17,9 @@ bool contraseniaValida(char*);
 bool esAlfanumerico(char);
 Usuario login(char*, char*, FILE*);
 int busquedaBinaria(char *, FILE *);
-void discardChars();
+void agregarUsuario(FILE*);
+void insertarUsuario(Usuario,FILE *);
+int busquedaBinariaNombre(char *, FILE *);
 
 int main(){
 
@@ -50,9 +52,16 @@ int main(){
     gets(contrasenia);
     usuario = login(email, contrasenia, fileUserBin);
     if(strcmp(usuario.nombreUsuario, "")==0){
-        printf("Usuario y/o contrasenia invalidos\n");
+        printf("Email y/o contrasenia invalidos\n");
     }else{
-        printf("Email y contrasenia validos\nNombre: %s\nContrasenia: %s\nEmail: %s", usuario.nombreUsuario, usuario.contrasenia, usuario.email);
+        printf("Email y contrasenia validos\nNombre: %s\nContrasenia: %s\nEmail: %s\n", usuario.nombreUsuario, usuario.contrasenia, usuario.email);
+    }
+    agregarUsuario(fileUserBin);
+    fseek(fileUserBin, 0, SEEK_SET);
+    fread(&usuario, sizeof(Usuario), 1, fileUserBin);
+    while(!feof(fileUserBin)){
+        printf("%s;%s;%s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
+        fread(&usuario, sizeof(Usuario), 1, fileUserBin);
     }
     fclose(fileUsersTxt);
     fclose(fileUserBin);
@@ -135,7 +144,7 @@ Usuario login(char *email, char *contrasenia, FILE *archivoBin){
     }
 }
 
- int busquedaBinaria(char *email, FILE *archivoBin){
+int busquedaBinaria(char *email, FILE *archivoBin){
 
     Usuario usuario;
     int primero=0;
@@ -159,8 +168,76 @@ Usuario login(char *email, char *contrasenia, FILE *archivoBin){
     return -1;
  }
 
- void discardChars(){
-    char c;
-    while ((c = getchar()) != '\n' && c != EOF);
+void agregarUsuario(FILE *archivo){
+    Usuario usuario;
+    printf("Please dame el nombre\n");
+    scanf("%s", usuario.nombreUsuario);
+    printf("Ahora toca el email\n");
+    scanf("%s", usuario.email);
+    printf("Contrasenia please\n");
+    scanf("%s", usuario.contrasenia);
+    int busquedaEmail = busquedaBinaria(usuario.email, archivo);
+    int busquedaNombre = busquedaBinariaNombre(usuario.nombreUsuario, archivo);
+    if(nombreValido(usuario.nombreUsuario) && emailValido(usuario.email) && contraseniaValida(usuario.contrasenia)){
+        if(busquedaEmail == -1 && busquedaNombre == -1){
+            insertarUsuario(usuario, archivo);
+        }else{
+            printf("Email y/o usuario existente\n");
+        }
+    }else{
+        printf("Tamanio inapropiado\n");
+    }
     return;
+}
+
+int busquedaBinariaNombre(char *nombre, FILE *archivoBin){
+
+    Usuario usuario;
+    int primero=0;
+    fseek(archivoBin,0,SEEK_END);
+    int ultimo = ftell(archivoBin)/sizeof(Usuario);
+    int medio = (primero+ultimo)/2;
+
+    while (primero<=ultimo){
+        fseek(archivoBin, sizeof(Usuario)*medio, SEEK_SET);
+        fread(&usuario,sizeof(Usuario),1, archivoBin);
+        if(strcmp(usuario.nombreUsuario, nombre) < 0){
+            primero = medio+1;
+        }else if (strcmp(usuario.nombreUsuario, nombre) == 0){
+            return medio;
+        }
+        else{
+            ultimo = medio - 1;
+        }
+        medio = (primero+ultimo)/2;
+    }
+    return -1;
  }
+
+void insertarUsuario(Usuario nuevoUsuario,FILE *archivo){
+    fseek(archivo, 0, SEEK_END);
+    int tamanio = ftell(archivo)/sizeof(Usuario);
+    Usuario usuarios[tamanio];
+    int i = 0;
+    Usuario usuario;
+    fseek(archivo, 0, SEEK_SET);
+    fread(&usuario, sizeof(Usuario), 1, archivo);
+    while(!feof(archivo)){
+        usuarios[i] = usuario;
+        fread(&usuario, sizeof(Usuario), 1, archivo);
+        i++;
+    }
+    int j = 0;
+    int flag = 0;
+    fseek(archivo, 0, SEEK_SET);
+    while(j < tamanio){
+        if(strcmp(usuarios[j].email, nuevoUsuario.email) > 0 && flag == 0){
+            fwrite(&nuevoUsuario, sizeof(Usuario), 1, archivo);
+            flag = 1;
+        }else{
+            fwrite(&usuarios[j], sizeof(Usuario), 1, archivo);
+            j++;
+        }
+
+    }
+}
