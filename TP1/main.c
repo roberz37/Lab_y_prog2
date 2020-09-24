@@ -10,62 +10,56 @@ typedef struct{
     char contrasenia[20];
 }Usuario;
 
+typedef struct{
+    char email[16];
+    int idProd;
+    float valorUnitario;
+    short cantSolicitada;
+}PedidosDat;
+
+typedef struct{
+    char email[16];
+    char nombre[16];
+    short cantProductos;
+    float total;
+}PedidosTxt;
+
 FILE *abrir(const char*, const char*);
+void escribirArchivos(FILE*, FILE*, FILE*);
+void imprimirArchivo(FILE*);
 bool nombreValido(char*);
 bool emailValido(char*);
 bool contraseniaValida(char*);
 bool esAlfanumerico(char);
-Usuario login(char*, char*, FILE*);
+Usuario login(FILE*);
+void checkearLogin(Usuario);
 int busquedaBinaria(char *, FILE *);
 void agregarUsuario(FILE*);
 void insertarUsuario(Usuario,FILE *);
 int busquedaBinariaNombre(char *, FILE *);
+void discardChars();
+void generarArchivo(FILE* , FILE*);
 
 int main(){
 
-    Usuario usuario;
-    char nombre[26];
-    char email[26];
-    char contrasenia[26];
     FILE *fileUsersTxt = abrir("users.txt", "r");
-    FILE *fileUserBin = abrir("users.dat", "wb+");
+    FILE *fileUsersBin = abrir("users.dat", "wb+");
     FILE *fileRejectedTxt = abrir("rejected.txt", "w");
-    while(fscanf(fileUsersTxt,"%s\t%s\t%s\n", nombre,email, contrasenia ) != EOF){
-        if(nombreValido(nombre) && emailValido(email) && contraseniaValida(contrasenia)){
-            strcpy(usuario.nombreUsuario,nombre);
-            strcpy(usuario.email, email);
-            strcpy(usuario.contrasenia, contrasenia);
-            fwrite(&usuario, sizeof(Usuario), 1, fileUserBin);
-        }else{
-            fprintf(fileRejectedTxt, "%-26s\t%-26s\t%-26s\r\n", nombre, email, contrasenia);
-        }
-    }
-    fseek(fileUserBin, 0, SEEK_SET);
-    fread(&usuario, sizeof(Usuario), 1, fileUserBin);
-    while(!feof(fileUserBin)){
-        printf("%s;%s;%s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
-        fread(&usuario, sizeof(Usuario), 1, fileUserBin);
-    }
-    printf("Ingrese su email\n");
-    gets(email);
-    printf("Ingrese una contrasenia\n");
-    gets(contrasenia);
-    usuario = login(email, contrasenia, fileUserBin);
-    if(strcmp(usuario.nombreUsuario, "")==0){
-        printf("Email y/o contrasenia invalidos\n");
-    }else{
-        printf("Email y contrasenia validos\nNombre: %s\nContrasenia: %s\nEmail: %s\n", usuario.nombreUsuario, usuario.contrasenia, usuario.email);
-    }
-    agregarUsuario(fileUserBin);
-    fseek(fileUserBin, 0, SEEK_SET);
-    fread(&usuario, sizeof(Usuario), 1, fileUserBin);
-    while(!feof(fileUserBin)){
-        printf("%s;%s;%s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
-        fread(&usuario, sizeof(Usuario), 1, fileUserBin);
-    }
+    FILE *fileOrdersBin = abrir("pedidos.dat", "rb");
+    FILE *fileOrdersTxt = abrir("pedidos.txt", "w+");
+    Usuario usuario;
+    escribirArchivos(fileUsersTxt, fileUsersBin, fileRejectedTxt);
+    imprimirArchivo(fileUsersBin);
+    usuario = login(fileUsersBin);
+    checkearLogin(usuario);
+    agregarUsuario(fileUsersBin);
+    imprimirArchivo(fileUsersBin);
+    generarArchivo(fileOrdersTxt, fileOrdersBin);
     fclose(fileUsersTxt);
-    fclose(fileUserBin);
+    fclose(fileUsersBin);
     fclose(fileRejectedTxt);
+    fclose(fileOrdersBin);
+    fclose(fileOrdersTxt);
     return 0;
 }
 
@@ -76,6 +70,33 @@ FILE *abrir(const char *fileName, const char *modo){
         exit(EXIT_FAILURE);
     }
     return file;
+}
+
+void escribirArchivos(FILE *archivo, FILE *archivoBin, FILE *archivoTxt){
+    Usuario usuario;
+    char nombre[26];
+    char email[26];
+    char contrasenia[26];
+    while(fscanf(archivo,"%s\t%s\t%s\n", nombre,email, contrasenia ) != EOF){
+        if(nombreValido(nombre) && emailValido(email) && contraseniaValida(contrasenia)){
+            strcpy(usuario.nombreUsuario,nombre);
+            strcpy(usuario.email, email);
+            strcpy(usuario.contrasenia, contrasenia);
+            fwrite(&usuario, sizeof(Usuario), 1, archivoBin);
+        }else{
+            fprintf(archivoTxt, "%-26s\t%-26s\t%-26s\r\n", nombre, email, contrasenia);
+        }
+    }
+}
+
+void imprimirArchivo(FILE *archivo){
+    Usuario usuario;
+    fseek(archivo, 0, SEEK_SET);
+    fread(&usuario, sizeof(Usuario), 1, archivo);
+    while(!feof(archivo)){
+        printf("%s;%s;%s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
+        fread(&usuario, sizeof(Usuario), 1, archivo);
+    }
 }
 
 bool nombreValido(char *nombre){
@@ -107,23 +128,22 @@ bool contraseniaValida(char *contrasenia){
         }
         i++;
     }
-    return i>=8 && i == contador;
+    return i >= 8 && i == contador;
 }
 
 bool esAlfanumerico(char letra){
-    char alfanumericos[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r'
-    ,'s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S',
-    'T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'};
-    for(int i = 0; i < 62; i++){
-        if(letra == alfanumericos[i]){
-            return true;
-        }
-    }
-    return false;
+    return (letra >= '0' && letra <= '9' )||( letra >= 'a' && letra <= 'z' )||( letra >= 'A' && letra <= 'Z');
 }
 
-Usuario login(char *email, char *contrasenia, FILE *archivoBin){
+Usuario login(FILE *archivoBin){
     Usuario usuario;
+    char email[26];
+    char contrasenia[26];
+    printf("Ingrese su email\n");
+    scanf("%s", email);
+    printf("Ingrese una contrasenia\n");
+    scanf("%s", contrasenia);
+
     int pos = busquedaBinaria(email, archivoBin);
     if(pos < 0){
         strcpy(usuario.nombreUsuario, "");
@@ -144,8 +164,15 @@ Usuario login(char *email, char *contrasenia, FILE *archivoBin){
     }
 }
 
-int busquedaBinaria(char *email, FILE *archivoBin){
+void checkearLogin(Usuario usuario){
+    if(strcmp(usuario.nombreUsuario, "")==0){
+        printf("Email y/o contrasenia invalidos\n");
+    }else{
+        printf("Email y contrasenia validos\nNombre: %s\nContrasenia: %s\nEmail: %s\n", usuario.nombreUsuario, usuario.contrasenia, usuario.email);
+    }
+}
 
+int busquedaBinaria(char *email, FILE *archivoBin){
     Usuario usuario;
     int primero=0;
     fseek(archivoBin,0,SEEK_END);
@@ -170,74 +197,85 @@ int busquedaBinaria(char *email, FILE *archivoBin){
 
 void agregarUsuario(FILE *archivo){
     Usuario usuario;
-    printf("Please dame el nombre\n");
+    printf("Ingrese el nombre de usuario\n");
     scanf("%s", usuario.nombreUsuario);
-    printf("Ahora toca el email\n");
+    printf("Ingrese el email\n");
     scanf("%s", usuario.email);
-    printf("Contrasenia please\n");
+    printf("Ingrese la contrasenia\n");
     scanf("%s", usuario.contrasenia);
     int busquedaEmail = busquedaBinaria(usuario.email, archivo);
-    int busquedaNombre = busquedaBinariaNombre(usuario.nombreUsuario, archivo);
     if(nombreValido(usuario.nombreUsuario) && emailValido(usuario.email) && contraseniaValida(usuario.contrasenia)){
-        if(busquedaEmail == -1 && busquedaNombre == -1){
+        if(busquedaEmail == -1){
             insertarUsuario(usuario, archivo);
         }else{
-            printf("Email y/o usuario existente\n");
+            printf("Email existente\n");
         }
     }else{
-        printf("Tamanio inapropiado\n");
+        printf("Nombre y/o email y/o contrasenia de formato inapropiado\n");
     }
     return;
 }
 
-int busquedaBinariaNombre(char *nombre, FILE *archivoBin){
-
-    Usuario usuario;
-    int primero=0;
-    fseek(archivoBin,0,SEEK_END);
-    int ultimo = ftell(archivoBin)/sizeof(Usuario);
-    int medio = (primero+ultimo)/2;
-
-    while (primero<=ultimo){
-        fseek(archivoBin, sizeof(Usuario)*medio, SEEK_SET);
-        fread(&usuario,sizeof(Usuario),1, archivoBin);
-        if(strcmp(usuario.nombreUsuario, nombre) < 0){
-            primero = medio+1;
-        }else if (strcmp(usuario.nombreUsuario, nombre) == 0){
-            return medio;
+void burbujeo(Usuario vec[], int tamanio){
+    Usuario aux;
+    bool flag = true;
+    for(int i = 0;i < tamanio - 1 && flag == 1; i++){
+        flag = false;
+        for(int j = 0; j < tamanio - i - 1; j++){
+            if(strcmp(vec[j + 1].email, vec[j].email) < 0){
+              flag = true;
+              aux = vec[j + 1];
+              vec[j + 1] = vec[j];
+              vec[j] = aux;
+            }
         }
-        else{
-            ultimo = medio - 1;
-        }
-        medio = (primero+ultimo)/2;
     }
-    return -1;
- }
+}
 
 void insertarUsuario(Usuario nuevoUsuario,FILE *archivo){
     fseek(archivo, 0, SEEK_END);
-    int tamanio = ftell(archivo)/sizeof(Usuario);
+    int tamanio = (ftell(archivo)/sizeof(Usuario)) + 1;
     Usuario usuarios[tamanio];
-    int i = 0;
     Usuario usuario;
+    int i = 0;
     fseek(archivo, 0, SEEK_SET);
     fread(&usuario, sizeof(Usuario), 1, archivo);
     while(!feof(archivo)){
         usuarios[i] = usuario;
+        if(strcmp(nuevoUsuario.nombreUsuario, usuario.nombreUsuario) == 0){
+            printf("Nombre de usuario existente\n");
+            return;
+        }
         fread(&usuario, sizeof(Usuario), 1, archivo);
         i++;
     }
-    int j = 0;
-    int flag = 0;
+    usuarios[i] = nuevoUsuario;
+    burbujeo(usuarios, tamanio);
     fseek(archivo, 0, SEEK_SET);
-    while(j < tamanio){
-        if(strcmp(usuarios[j].email, nuevoUsuario.email) > 0 && flag == 0){
-            fwrite(&nuevoUsuario, sizeof(Usuario), 1, archivo);
-            flag = 1;
-        }else{
-            fwrite(&usuarios[j], sizeof(Usuario), 1, archivo);
-            j++;
+    for(int j = 0; j < tamanio; j++){
+        fwrite(&usuarios[j], sizeof(Usuario), 1, archivo);
+    }
+}
+
+void discardChars(){
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+    return;
+}
+
+void generarArchivo(FILE *fileTxt, FILE *fileBin){
+    PedidosDat pedidoDat;
+    PedidosTxt pedidoTxt;
+    char email[16];
+    fseek(fileBin, 0, SEEK_END);
+    fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
+    while(!feof(fileBin)){
+        strcpy(email, pedidoDat.email);
+        while(!feof(fileBin) && strcmp(email, pedidoDat.email) == 0){
+
         }
+
 
     }
 }
