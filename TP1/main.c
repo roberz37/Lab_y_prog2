@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <stdbool.h>
+
 #include <string.h>
 
 typedef struct{
@@ -38,15 +38,15 @@ void agregarUsuario(FILE*);
 void insertarUsuario(Usuario,FILE *);
 int busquedaBinariaNombre(char *, FILE *);
 void discardChars();
-void generarArchivo(FILE* , FILE*);
+void generarArchivo(FILE* , FILE*, FILE*);
 
 int main(){
 
     FILE *fileUsersTxt = abrir("users.txt", "r");
-    FILE *fileUsersBin = abrir("users.dat", "wb+");
     FILE *fileRejectedTxt = abrir("rejected.txt", "w");
+    FILE *fileUsersBin = abrir("users.dat", "wb+");
     FILE *fileOrdersBin = abrir("pedidos.dat", "rb");
-    FILE *fileOrdersTxt = abrir("pedidos.txt", "w+");
+    FILE *fileOrdersTxt = abrir("pedidos.txt", "w");
     Usuario usuario;
     escribirArchivos(fileUsersTxt, fileUsersBin, fileRejectedTxt);
     imprimirArchivo(fileUsersBin);
@@ -54,7 +54,7 @@ int main(){
     checkearLogin(usuario);
     agregarUsuario(fileUsersBin);
     imprimirArchivo(fileUsersBin);
-    generarArchivo(fileOrdersTxt, fileOrdersBin);
+    generarArchivo(fileOrdersTxt, fileOrdersBin, fileUsersBin);
     fclose(fileUsersTxt);
     fclose(fileUsersBin);
     fclose(fileRejectedTxt);
@@ -264,18 +264,29 @@ void discardChars(){
     return;
 }
 
-void generarArchivo(FILE *fileTxt, FILE *fileBin){
+void generarArchivo(FILE *fileTxt, FILE *fileBin, FILE *fileUsersBin){
     PedidosDat pedidoDat;
     PedidosTxt pedidoTxt;
-    char email[16];
-    fseek(fileBin, 0, SEEK_END);
+    int indice = 0;
+    Usuario usuario;
+    fseek(fileBin, 0, SEEK_SET);
     fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
+    fprintf(fileTxt, "Email\t\tNombre\tCantidad\tTotal\n");
     while(!feof(fileBin)){
-        strcpy(email, pedidoDat.email);
-        while(!feof(fileBin) && strcmp(email, pedidoDat.email) == 0){
+        pedidoTxt.cantProductos = 0;
+        pedidoTxt.total = 0;
+        strcpy(pedidoTxt.email, pedidoDat.email);
+        indice = busquedaBinaria(pedidoDat.email, fileUsersBin);
+        fseek(fileUsersBin,sizeof(Usuario)* indice, SEEK_SET);
+        fread(&usuario, sizeof(Usuario), 1, fileUsersBin);
+        strcpy(pedidoTxt.nombre, usuario.nombreUsuario);
 
+        while(!feof(fileBin) && strcmp(pedidoDat.email,pedidoTxt.email) == 0){
+            pedidoTxt.cantProductos += pedidoDat.cantSolicitada;
+            pedidoTxt.total += (pedidoDat.valorUnitario * pedidoDat.cantSolicitada);
+            fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
         }
-
-
+        fprintf(fileTxt, "%s\t%s\t\t%d\t%0.2f\n", pedidoTxt.email, pedidoTxt.nombre, pedidoTxt.cantProductos, pedidoTxt.total);
     }
+    return;
 }
