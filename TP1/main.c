@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 #include <string.h>
 
 typedef struct{
@@ -48,18 +47,41 @@ int main(){
     FILE *fileOrdersBin = abrir("pedidos.dat", "rb");
     FILE *fileOrdersTxt = abrir("pedidos.txt", "w");
     Usuario usuario;
+    printf("PUNTO 1:\n");
+    printf("Generando archivos users.dat y rejected.txt\n\n");
     escribirArchivos(fileUsersTxt, fileUsersBin, fileRejectedTxt);
+    printf("Imprimo el archivo users.dat\n\n");
     imprimirArchivo(fileUsersBin);
+    printf("\nPUNTO 2:\n");
+    printf("Validacion de credenciales\n\n");
     usuario = login(fileUsersBin);
     checkearLogin(usuario);
+    printf("\nPUNTO 3:\n");
+    printf("Agregar un usuario manteniendo ordenado el archivo\n\n");
     agregarUsuario(fileUsersBin);
+    printf("\nImprimo el archivo para mostrar que esta ordenado\n\n");
     imprimirArchivo(fileUsersBin);
+    printf("\nPUNTO 4:\n");
+    printf("Generar archivo pedidos.txt\n\n");
     generarArchivo(fileOrdersTxt, fileOrdersBin, fileUsersBin);
+    /*char email[6];
+    char nombre[7];
+    char cantidad[9];
+    char total[6];
+    fseek(fileOrdersTxt, 0, SEEK_SET);
+    fscanf(fileOrdersTxt, "%s\t\t\t%s\t\t\t%s\t%s\n", email, nombre, cantidad, total);
+    printf("%s\t\t\t%s\t\t\t%s\t%s\n", email, nombre, cantidad, total);
+
+    while(!feof(fileOrdersTxt)){
+
+    }*/
+
     fclose(fileUsersTxt);
     fclose(fileUsersBin);
     fclose(fileRejectedTxt);
     fclose(fileOrdersBin);
     fclose(fileOrdersTxt);
+    printf("\nFIN\n");
     return 0;
 }
 
@@ -166,9 +188,10 @@ Usuario login(FILE *archivoBin){
 
 void checkearLogin(Usuario usuario){
     if(strcmp(usuario.nombreUsuario, "")==0){
-        printf("Email y/o contrasenia invalidos\n");
+        printf("\nEmail y/o contrasenia invalidos\n");
     }else{
-        printf("Email y contrasenia validos\nNombre: %s\nContrasenia: %s\nEmail: %s\n", usuario.nombreUsuario, usuario.contrasenia, usuario.email);
+        printf("\nEmail y contrasenia validos\n");
+        printf("Sus datos de usuario son:\nNombre: %s\tEmail: %s\tContrasenia: %s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
     }
 }
 
@@ -208,10 +231,10 @@ void agregarUsuario(FILE *archivo){
         if(busquedaEmail == -1){
             insertarUsuario(usuario, archivo);
         }else{
-            printf("Email existente\n");
+            printf("\nEmail existente\n");
         }
     }else{
-        printf("Nombre y/o email y/o contrasenia de formato inapropiado\n");
+        printf("\nNombre y/o email y/o contrasenia de formato inapropiado\n");
     }
     return;
 }
@@ -243,7 +266,7 @@ void insertarUsuario(Usuario nuevoUsuario,FILE *archivo){
     while(!feof(archivo)){
         usuarios[i] = usuario;
         if(strcmp(nuevoUsuario.nombreUsuario, usuario.nombreUsuario) == 0){
-            printf("Nombre de usuario existente\n");
+            printf("\nNombre de usuario existente\n");
             return;
         }
         fread(&usuario, sizeof(Usuario), 1, archivo);
@@ -271,7 +294,9 @@ void generarArchivo(FILE *fileTxt, FILE *fileBin, FILE *fileUsersBin){
     Usuario usuario;
     fseek(fileBin, 0, SEEK_SET);
     fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
-    fprintf(fileTxt, "Email\t\tNombre\tCantidad\tTotal\n");
+    printf("Mostrando archivo pedidos.txt\n");
+    printf("\nEmail\t\t\tNombre\t\t\tCantidad\tTotal\n");
+    fprintf(fileTxt, "Email\t\t\tNombre\t\t\tCantidad\tTotal\n");
     while(!feof(fileBin)){
         pedidoTxt.cantProductos = 0;
         pedidoTxt.total = 0;
@@ -286,7 +311,8 @@ void generarArchivo(FILE *fileTxt, FILE *fileBin, FILE *fileUsersBin){
             pedidoTxt.total += (pedidoDat.valorUnitario * pedidoDat.cantSolicitada);
             fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
         }
-        fprintf(fileTxt, "%s\t%s\t\t%d\t%0.2f\n", pedidoTxt.email, pedidoTxt.nombre, pedidoTxt.cantProductos, pedidoTxt.total);
+        printf("%-16s\t%-16s\t%03d\t\t%0.2f\n", pedidoTxt.email, pedidoTxt.nombre, pedidoTxt.cantProductos, pedidoTxt.total);
+        fprintf(fileTxt, "%-16s\t%-16s\t%03d\t\t%0.2f\n", pedidoTxt.email, pedidoTxt.nombre, pedidoTxt.cantProductos, pedidoTxt.total);
     }
     return;
 }
