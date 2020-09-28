@@ -38,6 +38,7 @@ void insertarUsuario(Usuario,FILE *);
 int busquedaBinariaNombre(char *, FILE *);
 void discardChars();
 void generarArchivo(FILE* , FILE*, FILE*);
+void imprimirPedidos(FILE*);
 
 int main(){
 
@@ -45,37 +46,30 @@ int main(){
     FILE *fileRejectedTxt = abrir("rejected.txt", "w");
     FILE *fileUsersBin = abrir("users.dat", "wb+");
     FILE *fileOrdersBin = abrir("pedidos.dat", "rb");
-    FILE *fileOrdersTxt = abrir("pedidos.txt", "w");
+    FILE *fileOrdersTxt = abrir("pedidos.txt", "w+");
     Usuario usuario;
     printf("PUNTO 1:\n");
     printf("Generando archivos users.dat y rejected.txt\n\n");
     escribirArchivos(fileUsersTxt, fileUsersBin, fileRejectedTxt);
     printf("Imprimo el archivo users.dat\n\n");
     imprimirArchivo(fileUsersBin);
+    system("PAUSE");
     printf("\nPUNTO 2:\n");
     printf("Validacion de credenciales\n\n");
     usuario = login(fileUsersBin);
     checkearLogin(usuario);
+    system("PAUSE");
     printf("\nPUNTO 3:\n");
     printf("Agregar un usuario manteniendo ordenado el archivo\n\n");
     agregarUsuario(fileUsersBin);
     printf("\nImprimo el archivo para mostrar que esta ordenado\n\n");
     imprimirArchivo(fileUsersBin);
+    system("PAUSE");
     printf("\nPUNTO 4:\n");
     printf("Generar archivo pedidos.txt\n\n");
     generarArchivo(fileOrdersTxt, fileOrdersBin, fileUsersBin);
-    /*char email[6];
-    char nombre[7];
-    char cantidad[9];
-    char total[6];
-    fseek(fileOrdersTxt, 0, SEEK_SET);
-    fscanf(fileOrdersTxt, "%s\t\t\t%s\t\t\t%s\t%s\n", email, nombre, cantidad, total);
-    printf("%s\t\t\t%s\t\t\t%s\t%s\n", email, nombre, cantidad, total);
-
-    while(!feof(fileOrdersTxt)){
-
-    }*/
-
+    printf("Imprimo el archivo pedidos.txt\n\n");
+    imprimirPedidos(fileOrdersTxt);
     fclose(fileUsersTxt);
     fclose(fileUsersBin);
     fclose(fileRejectedTxt);
@@ -99,6 +93,7 @@ void escribirArchivos(FILE *archivo, FILE *archivoBin, FILE *archivoTxt){
     char nombre[26];
     char email[26];
     char contrasenia[26];
+    printf("Empezando a escribir users.dat y rejected.txt\n");
     while(fscanf(archivo,"%s\t%s\t%s\n", nombre,email, contrasenia ) != EOF){
         if(nombreValido(nombre) && emailValido(email) && contraseniaValida(contrasenia)){
             strcpy(usuario.nombreUsuario,nombre);
@@ -109,6 +104,7 @@ void escribirArchivos(FILE *archivo, FILE *archivoBin, FILE *archivoTxt){
             fprintf(archivoTxt, "%-26s\t%-26s\t%-26s\r\n", nombre, email, contrasenia);
         }
     }
+    printf("\nFinal de escritura de users.dat y rejected.txt\n\n");
 }
 
 void imprimirArchivo(FILE *archivo){
@@ -119,6 +115,7 @@ void imprimirArchivo(FILE *archivo){
         printf("%s;%s;%s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
         fread(&usuario, sizeof(Usuario), 1, archivo);
     }
+    printf("\n");
 }
 
 bool nombreValido(char *nombre){
@@ -193,6 +190,7 @@ void checkearLogin(Usuario usuario){
         printf("\nEmail y contrasenia validos\n");
         printf("Sus datos de usuario son:\nNombre: %s\tEmail: %s\tContrasenia: %s\n", usuario.nombreUsuario, usuario.email, usuario.contrasenia);
     }
+    printf("\n");
 }
 
 int busquedaBinaria(char *email, FILE *archivoBin){
@@ -293,9 +291,8 @@ void generarArchivo(FILE *fileTxt, FILE *fileBin, FILE *fileUsersBin){
     int indice = 0;
     Usuario usuario;
     fseek(fileBin, 0, SEEK_SET);
+    printf("Empezando a escribir pedidos.txt\n");
     fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
-    printf("Mostrando archivo pedidos.txt\n");
-    printf("\nEmail\t\t\tNombre\t\t\tCantidad\tTotal\n");
     fprintf(fileTxt, "Email\t\t\tNombre\t\t\tCantidad\tTotal\n");
     while(!feof(fileBin)){
         pedidoTxt.cantProductos = 0;
@@ -311,8 +308,25 @@ void generarArchivo(FILE *fileTxt, FILE *fileBin, FILE *fileUsersBin){
             pedidoTxt.total += (pedidoDat.valorUnitario * pedidoDat.cantSolicitada);
             fread(&pedidoDat, sizeof(PedidosDat), 1, fileBin);
         }
-        printf("%-16s\t%-16s\t%03d\t\t%0.2f\n", pedidoTxt.email, pedidoTxt.nombre, pedidoTxt.cantProductos, pedidoTxt.total);
         fprintf(fileTxt, "%-16s\t%-16s\t%03d\t\t%0.2f\n", pedidoTxt.email, pedidoTxt.nombre, pedidoTxt.cantProductos, pedidoTxt.total);
     }
+    printf("\nFinal de escritura de pedidos.txt\n\n");
     return;
+}
+
+void imprimirPedidos(FILE* fileTxt){
+    char email[6];
+    char nombre[7];
+    char cantidad[9];
+    char total[6];
+    PedidosTxt pedido;
+    fseek(fileTxt, 0, SEEK_SET);
+    fscanf(fileTxt, "%s\t\t\t%s\t\t\t%s\t%s\n", email, nombre, cantidad, total);
+    printf("%s\t\t\t%s\t\t\t%s\t%s\n", email, nombre, cantidad, total);
+    fscanf(fileTxt, "%s\t%s\t%d\t\t%f\n", pedido.email, pedido.nombre, &pedido.cantProductos, &pedido.total);
+    printf("%-16s\t%-16s\t%03d\t\t%0.2f\n", pedido.email, pedido.nombre, pedido.cantProductos, pedido.total);
+    while(!feof(fileTxt)){
+        fscanf(fileTxt, "%s\t%s\t%d\t\t%f\n", pedido.email, pedido.nombre, &pedido.cantProductos, &pedido.total);
+        printf("%-16s\t%-16s\t%03d\t\t%0.2f\n", pedido.email, pedido.nombre, pedido.cantProductos, pedido.total);
+    }
 }
