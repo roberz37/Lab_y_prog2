@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1603227122 source:c:\users\pc\desktop\facultad\lab_y_prog2\pilas\pilassiete\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+

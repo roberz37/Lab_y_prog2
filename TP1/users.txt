@@ -1,11 +1,10 @@
-roberto                   	a@gmail.com               	roberto123                 
-ignacio                   	b@gmail.com               	ignacio123                 
-carlos                    	c@gmail.com               	carlos123                  
-pablo                     	d@gmail.com               	pablo;23                   
-tobias                    	e@gmail.com               	tobias123                  
-natalia                   	f@gmail.com               	natalia123                 
-maria                     	g@gmail.com               	mariarosa123               
-nicolas                   	h@gmail.com               	nicolas123                 
-nicolas                   	i@gmail.com               	nicolasfresco123           
-mauro                     	jjgmail.com               	mauroezequiellombardo123   
-
+roberto carlos;a@gmail.com;roberto123
+ignacio;b@gmail.com;ignacio123
+carlos;c@gmail.com;carlos123
+pablo diaz;d@gmail.com;pablo.23
+tobias;e@gmail.com;tobias123
+natalia;f@gmail.com;natalia123
+maria ortiz;g@gmail.com;mariarosa123
+nicolas;h@gmail.com;nicolas123
+ivan gomez;i@gmail.com;ivangomez123
+mauro;jjgmail.com;mauroezequiellombardo123

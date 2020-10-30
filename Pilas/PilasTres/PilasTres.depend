@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1602043021 source:c:\users\pc\desktop\facultad\lab_y_prog2\pilas\pilastres\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
