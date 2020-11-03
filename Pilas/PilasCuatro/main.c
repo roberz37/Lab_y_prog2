@@ -11,7 +11,7 @@ Nodo* create();
 bool isEmpty(Nodo *);
 void push(Nodo **, int);
 int pop(Nodo **);
-void ingresarValor(Nodo**, int, int);
+void isPosible(Nodo**, int, int);
 /*Dada una pila y dos valores X e I, desarrollar un procedimiento que inserte el valor X
 en la posición I de la pila si es posible. (Definir parámetros y codificar).*/
 
@@ -29,7 +29,7 @@ int main(){
     scanf("%d", &valorX);
     printf("Ingrese la posicion\n");
     scanf("%d", &valorI);
-    ingresarValor(&pila, valorX, valorI);
+    isPosible(&pila, valorX, valorI);
     while(!isEmpty(pila)){
         printf("%d\n", pop(&pila));
     }
@@ -60,21 +60,20 @@ int pop(Nodo **pila){
     return valor;
 }
 
-void ingresarValor(Nodo **pila, int valorX, int valorI){
-    Nodo *pilaAux = create();
-    int i = 1;
-    while(!isEmpty(*pila)&& i <= valorI){
-        if(i == valorI){
-            push(pila, valorX);
-        }else{
-            push(&pilaAux, pop(pila));
-        }
-        i++;
+void isPosible(Nodo** pila, int valor, int posicion){
+    Nodo* auxiliar = create();
+
+    while (!isEmpty(*pila) && posicion > 1){
+        push(&auxiliar, pop(pila));
+        posicion--;
     }
-    if((i - 1) != valorI){
-        printf("No se puede ingresar el valor\n");
+    if (posicion == 1){
+        push(pila, valor);
+        printf("S\n");
+    } else {
+        printf("N\n");
     }
-    while(!isEmpty(pilaAux)){
-        push(pila, pop(&pilaAux));
+    while (!isEmpty(auxiliar)){
+        push(pila, pop(&auxiliar));
     }
 }

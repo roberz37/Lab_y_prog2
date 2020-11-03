@@ -11,7 +11,7 @@ Nodo* create();
 bool isEmpty(Nodo *);
 void push(Nodo **, int);
 int pop(Nodo **);
-void ingresarValor(Nodo **, int);
+void ingresarAlFinal(Nodo **, int);
 
 /*Dada una pila y un valor X, desarrollar un procedimiento que inserte el valor X en la
 última posición de la pila y la retorne. (Definir parámetros y codificar).*/
@@ -19,14 +19,14 @@ int main(){
 
     Nodo *pila = create();
     int valor;
-    push(&pila, 5);
+    //push(&pila, 5);
     push(&pila, 4);
     push(&pila, 3);
     push(&pila, 2);
     push(&pila, 1);
     printf("Ingrese el valor\n");
     scanf("%d", &valor);
-    ingresarValor(&pila, valor);
+    ingresarAlFinal(&pila, valor);
     while(!isEmpty(pila)){
         printf("%d\n", pop(&pila));
     }
@@ -56,7 +56,7 @@ int pop(Nodo **pila){
     return valor;
 }
 
-void ingresarValor(Nodo **pila, int valor){
+void ingresarAlFinal(Nodo **pila, int valor){
     Nodo *pilaAux = create();
     while(!isEmpty(*pila)){
         push(&pilaAux, pop(pila));

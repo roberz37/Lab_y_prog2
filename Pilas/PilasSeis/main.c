@@ -11,7 +11,7 @@ Nodo* create();
 bool isEmpty(Nodo *);
 void push(Nodo **, int);
 int pop(Nodo **);
-void ingresarValor(Nodo **, int);
+void cambiarValor (Nodo**, int, int);
 
 /*Dada una pila y dos valores X e Y, desarrollar un procedimiento que reemplace cada
 valor igual a X que se encuentre en la pila por el valor Y retornando la pila
@@ -22,13 +22,13 @@ int main(){
     Nodo *pila = create();
     int valor;
     push(&pila, 5);
-    push(&pila, 4);
+    push(&pila, 5);
     push(&pila, 3);
     push(&pila, 2);
-    push(&pila, 1);
+    push(&pila, 5);
     printf("Ingrese el valor\n");
     scanf("%d", &valor);
-    ingresarValor(&pila, valor);
+    cambiarValor (&pila, valor, 20);
     while(!isEmpty(pila)){
         printf("%d\n", pop(&pila));
     }
@@ -57,14 +57,15 @@ int pop(Nodo **pila){
     free(aux);
     return valor;
 }
-
-void ingresarValor(Nodo **pila, int valor){
-    Nodo *pilaAux = create();
-    while(!isEmpty(*pila)){
-        push(&pilaAux, pop(pila));
+void cambiarValor (Nodo** pila, int valor, int nuevoValor){
+    Nodo* auxiliar = create ();
+    while (!isEmpty(*pila)){
+        push(&auxiliar, pop(pila));
     }
-    push(pila, valor);
-    while(!isEmpty(pilaAux)){
-        push(pila, pop(&pilaAux));
+    while (!isEmpty(auxiliar)){
+        if (auxiliar->dato == valor){
+            auxiliar->dato = nuevoValor;
+        }
+        push(pila, pop(&auxiliar));
     }
 }

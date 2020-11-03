@@ -9,11 +9,6 @@ typedef struct Nodo{
     struct Nodo* siguiente;
 }Nodo;
 
-typedef struct Nodo{
-    int dato;
-    struct Nodo* siguiente;
-}Nodo;
-
 Nodo* create();
 bool isEmpty(Nodo *);
 void push(Nodo **, int);

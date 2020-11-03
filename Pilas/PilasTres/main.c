@@ -13,22 +13,28 @@ bool isEmpty(Nodo *);
 void push(Nodo **, int);
 int pop(Nodo **);
 void isPossible(Nodo **, int );
+void clear(Nodo**);
 
 int main(){
     int valor = 0;
     Nodo* pila = create();
-    //push(&pila, 3);
+    push(&pila, 5);
+    push(&pila, 4);
+    push(&pila, 3);
     push(&pila, 2);
     push(&pila, 1);
     printf("Ingrese un valor\n");
     scanf("%d", &valor);
     isPossible(&pila, valor);
-    while(!isEmpty(pila)){
-        printf("%d\n", pop(&pila));
-    }
+    clear(&pila);
     return 0;
 }
 
+void clear(Nodo** pila){
+    while(!isEmpty(*pila)){
+        printf("%d\n", pop(pila));
+    }
+}
 Nodo* create(){
     return NULL;
 }
@@ -53,14 +59,22 @@ int pop(Nodo **pila){
 }
 
 void isPossible(Nodo **pila, int valor){
-    if((*pila)->siguiente->siguiente == NULL){
-        printf("N\n");
-    }else{
-        int valorUno = pop(pila);
-        int valorDos = pop(pila);
-        push(pila, valor);
-        push(pila, valorDos);
-        push(pila, valorUno);
-        printf("S\n");
+
+    int cont = 1;
+    Nodo* pilaAux = NULL;
+
+    while (!isEmpty(*pila) && cont < 3){
+        push(&pilaAux, pop(pila));
+        cont++;
     }
+    if (cont == 3){
+        push(pila, valor);
+        printf("S\n");
+    } else {
+        printf("N\n");
+    }
+    while (!isEmpty(pilaAux)){
+        push(pila, pop(&pilaAux));
+    }
+
 }
