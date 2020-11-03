@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1604428193 source:/home/roberz/Lab_y_prog2/Pilas/rober/ejercicio3/ejercicio3/main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
