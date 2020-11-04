@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1604445299 source:c:\users\pc\desktop\facultad\lab_y_prog2\colas\colasdos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+

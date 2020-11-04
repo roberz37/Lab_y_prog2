@@ -16,22 +16,28 @@ void add(Cola*, int);
 int remover(Cola*);
 bool isEmpty(Cola*);
 void create(Cola*);
-void eliminarDosNodos(Cola*);
+void concatenarColas(Cola*, Cola*);
+
+/*Dadas dos colas COLA y COLB (nodo = registro + puntero), desarrollar y codificar
+un procedimiento que genere una única cola COLAB a partir de ellas. (Primero los
+nodos de COLA y luego los de COLB).*/
 
 int main(){
-    Cola cola;
-    create(&cola);
-    add(&cola, 1);
-    add(&cola, 2);
-    add(&cola, 3);
-    add(&cola, 4);
-    add(&cola, 5);
-    add(&cola, 6);
-    add(&cola, 7);
-    add(&cola, 8);
-    eliminarDosNodos(&cola);
-    while(!isEmpty(&cola)){
-        printf("%d\n", remover(&cola));
+    Cola colA;
+    Cola colB;
+    create(&colA);
+    create(&colB);
+    add(&colA, 1);
+    add(&colA, 2);
+    add(&colA, 3);
+    add(&colA, 4);
+    add(&colB, 5);
+    add(&colB, 6);
+    add(&colB, 7);
+    add(&colB, 8);
+    concatenarColas(&colA, &colB);
+    while(!isEmpty(&colB)){
+        printf("%d\n", remover(&colB));
     }
     return 0;
 }
@@ -68,19 +74,11 @@ void create(Cola *cola){
     cola->ultimo = NULL;
 }
 
-void eliminarDosNodos(Cola *cola){
-    bool sePudo = false;
-    if(cola->primero != NULL){
-        if(cola->primero->siguiente != NULL){
-            remover(cola);
-            remover(cola);
-            sePudo = true;
-        }
+void concatenarColas(Cola* colA, Cola* colB){
+    while(!isEmpty(colB)){
+        add(colA, remover(colB));
     }
-    if(sePudo){
-        printf("S\n");
-    } else {
-        printf("N\n");
+    while(!isEmpty(colA)){
+        add(colB, remover(colA));
     }
 }
-

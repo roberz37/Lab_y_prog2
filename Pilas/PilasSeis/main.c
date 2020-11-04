@@ -17,6 +17,7 @@ void cambiarValor (Nodo**, int, int);
 valor igual a X que se encuentre en la pila por el valor Y retornando la pila
 modificada. En caso de no haber ningún valor igual a X retornar la pila sin cambio.
 (Definir parámetros y codificar).*/
+
 int main(){
 
     Nodo *pila = create();

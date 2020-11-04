@@ -16,23 +16,19 @@ void add(Cola*, int);
 int remover(Cola*);
 bool isEmpty(Cola*);
 void create(Cola*);
-void eliminarDosNodos(Cola*);
+bool isEmptyPila(Nodo *);
+int pop(Nodo **);
+void push(Nodo **, int);
+void imprimirCola(Cola *);
 
 int main(){
+
     Cola cola;
     create(&cola);
-    add(&cola, 1);
-    add(&cola, 2);
-    add(&cola, 3);
-    add(&cola, 4);
-    add(&cola, 5);
-    add(&cola, 6);
-    add(&cola, 7);
-    add(&cola, 8);
-    eliminarDosNodos(&cola);
-    while(!isEmpty(&cola)){
-        printf("%d\n", remover(&cola));
+    for(int i = 1; i < 100; i++){
+        add(&cola, i);
     }
+    imprimirCola(&cola);
     return 0;
 }
 
@@ -68,19 +64,44 @@ void create(Cola *cola){
     cola->ultimo = NULL;
 }
 
-void eliminarDosNodos(Cola *cola){
-    bool sePudo = false;
-    if(cola->primero != NULL){
-        if(cola->primero->siguiente != NULL){
-            remover(cola);
-            remover(cola);
-            sePudo = true;
-        }
+void imprimirCola(Cola *cola){
+    Cola colaAux;
+    int cont = 0;
+    create(&colaAux);
+    Nodo *pila = NULL;
+    while(!isEmpty(cola)){
+        add(&colaAux, remover(cola));
+        cont++;
     }
-    if(sePudo){
-        printf("S\n");
-    } else {
-        printf("N\n");
+    if(cont >= 100){
+        while(!isEmpty(&colaAux)){
+            printf("%d\n", remover(&colaAux));
+        }
+    }else{
+        while(!isEmpty(&colaAux)){
+            push(&pila, remover(&colaAux));
+        }
+        while(!isEmptyPila(pila)){
+            printf("%d\n", pop(&pila));
+        }
     }
 }
 
+void push(Nodo **pila, int dato){
+    Nodo *nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = *pila;
+    *pila = nodo;
+}
+
+int pop(Nodo **pila){
+    int valor = (*pila)->dato;
+    Nodo *aux = *pila;
+    *pila = (*pila)->siguiente;
+    free(aux);
+    return valor;
+}
+
+bool isEmptyPila(Nodo *pila){
+    return pila == NULL;
+}
