@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1604980489 source:c:\users\pc\desktop\facultad\lab_y_prog2\tp2\ejerciciodos\main.cpp
+	<iostream>
+	<string.h>
+
