@@ -41,7 +41,7 @@ void agregar(int vec[], int tamano, int dato){
     if(cont < 10){
         vec[cont] = dato;
     }else{
-        printf("Tenes la cola llena\n");
+        printf("La cola esta llena\n");
     }
 }
 
@@ -53,7 +53,7 @@ int remover(int vec[], int tamano){
     }
     vec[tamano - 1] = 0;
     if(valor == 0){
-        printf("Tenes la cola vacia\n");
+        printf("la cola  esta vacia\n");
     }
     return valor;
 }

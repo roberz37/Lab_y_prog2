@@ -1,74 +1,78 @@
 #include <iostream>
-#include <string.h>
+
 using namespace std;
 
 typedef struct{
     int legajo;
     float promedio;
-}ST_ALUMNE;
+}Alumno;
 
 typedef struct{
     int parcial;
     char fecha[11];
     int legajo;
     int nota;
-}ST_MATERIA;
+}Materia;
 
-typedef struct ST_NODO{
-    ST_MATERIA materia;
-    ST_NODO* siguiente;
-}ST_NODO;
+typedef struct Nodo{
+    Materia materia;
+    Nodo* siguiente;
+}Nodo;
 
-void create(ST_NODO**);
-void ordenarPorLegajo(ST_NODO**, FILE*);
-void imprimirNotasPorMateria(ST_NODO *);//, FILE*);
-ST_NODO* insertarOrdenado(ST_NODO**, ST_MATERIA);
-void borrarLista(ST_NODO**);
-void escribirArchivo(FILE*, ST_NODO**);
+void create(Nodo**);
+void ordenarPorLegajo(Nodo**, FILE*);
+void imprimirNotasPorMateria(Nodo *);
+Nodo* insertarOrdenado(Nodo**, Materia);
+void borrarLista(Nodo**);
+void escribirArchivo(FILE*, Nodo**);
 void imprimirArchivo(FILE*);
+FILE *abrir(const char *, const char *);
 
 int main(){
-    FILE* fisica = fopen("fisica.txt", "r");
-    if(fisica == NULL){
-        printf("fallo");
-        return 0;
-    }
-    FILE* promedioFisica = fopen("promedioFisica.dat", "wb+");
-    ST_NODO *listaFisica;
+    FILE* fisica = abrir("fisica.txt", "r");
+    FILE* promedioFisica = abrir("promedioFisica.dat", "wb+");
+    Nodo *listaFisica;
     create(&listaFisica);
     ordenarPorLegajo(&listaFisica, fisica);
+    printf("Imprimo notas por materia\n");
     imprimirNotasPorMateria(listaFisica);
     escribirArchivo(promedioFisica, &listaFisica);
+    printf("\nImprimo archivo de promedios\n");
     imprimirArchivo(promedioFisica);
     borrarLista(&listaFisica);
     fclose(promedioFisica);
     fclose(fisica);
     return 0;
 }
-void create(ST_NODO** lista){
+void create(Nodo** lista){
     *lista = NULL;
 }
-void ordenarPorLegajo(ST_NODO** lista, FILE* asignatura){
-    ST_MATERIA materia;
+void ordenarPorLegajo(Nodo** lista, FILE* asignatura){
+    Materia materia;
     while(fscanf(asignatura, "%d\t%s\t%d\t%d\n" , &materia.parcial, materia.fecha, &materia.legajo, &materia.nota) != EOF){
         insertarOrdenado(lista, materia);
     }
 }
 
-void imprimirNotasPorMateria(ST_NODO *lista){
+void imprimirNotasPorMateria(Nodo *lista){
     while(lista != NULL){
-        printf("legajo: %d, nota 1: %d, nota 2: %d\n", lista->materia.legajo, lista->materia.nota, lista->siguiente->materia.nota);
+        printf("legajo: %d, nota del primer parcial: %d, nota del segundo parcial: %d\n", lista->materia.legajo, lista->materia.nota, lista->siguiente->materia.nota);
         lista = lista->siguiente->siguiente;
     }
 }
 
-ST_NODO* insertarOrdenado(ST_NODO** lista, ST_MATERIA asignatura){
-    ST_NODO* nodo = (ST_NODO*)malloc(sizeof(ST_NODO));
-    nodo->materia = asignatura;
+Nodo* insertarOrdenado(Nodo** lista, Materia materia){
+    Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->materia = materia;
     nodo->siguiente = NULL;
-    ST_NODO* listaAux = *lista;
-    ST_NODO* listaAnt = NULL;
-    while(listaAux != NULL && asignatura.legajo >= listaAux->materia.legajo){
+    Nodo* listaAux = *lista;
+    Nodo* listaAnt = NULL;
+    while(listaAux != NULL && materia.legajo > listaAux->materia.legajo){
+        listaAnt = listaAux;
+        listaAux = listaAux->siguiente;
+
+    }
+    if(listaAux != NULL && materia.legajo == listaAux->materia.legajo && materia.parcial > listaAux->materia.parcial){
         listaAnt = listaAux;
         listaAux = listaAux->siguiente;
     }
@@ -81,8 +85,8 @@ ST_NODO* insertarOrdenado(ST_NODO** lista, ST_MATERIA asignatura){
     return nodo;
 }
 
-void borrarLista(ST_NODO** lista){
-    ST_NODO* listaAux = NULL;
+void borrarLista(Nodo** lista){
+    Nodo* listaAux = NULL;
     while(listaAux != NULL){
         listaAux = *lista;
         *lista = (*lista)->siguiente;
@@ -90,24 +94,32 @@ void borrarLista(ST_NODO** lista){
     }
 }
 
-void escribirArchivo(FILE* archivo, ST_NODO** lista){
-    ST_NODO *listaAux = *lista;
-    ST_ALUMNE alumno;
+void escribirArchivo(FILE* archivo, Nodo** lista){
+    Nodo *listaAux = *lista;
+    Alumno alumno;
     while(listaAux != NULL){
         alumno.legajo = listaAux->materia.legajo;
         alumno.promedio = (((float)listaAux->materia.nota) + ((float)listaAux->siguiente->materia.nota))/2;
-        fwrite(&alumno, sizeof(ST_ALUMNE), 1, archivo);
+        fwrite(&alumno, sizeof(Alumno), 1, archivo);
         listaAux = listaAux->siguiente->siguiente;
     }
 }
 
 void imprimirArchivo(FILE* archivo){
-    ST_ALUMNE alumno;
-    printf("archivo\n");
+    Alumno alumno;
     fseek(archivo, 0, SEEK_SET);
-    fread(&alumno, sizeof(ST_ALUMNE), 1, archivo);
+    fread(&alumno, sizeof(Alumno), 1, archivo);
     while(!feof(archivo)){
-        printf("%d, %f\n", alumno.legajo, alumno.promedio);
-        fread(&alumno, sizeof(ST_ALUMNE), 1, archivo);
+        printf("Legajo:%d, Promedio:%f\n", alumno.legajo, alumno.promedio);
+        fread(&alumno, sizeof(Alumno), 1, archivo);
     }
+}
+
+FILE *abrir(const char *fileName, const char *modo){
+    FILE *file = fopen(fileName, modo);
+    if (file == NULL){
+        fprintf(stderr, "No se pudo abrir el archivo: %s", fileName);
+        exit(EXIT_FAILURE);
+    }
+    return file;
 }

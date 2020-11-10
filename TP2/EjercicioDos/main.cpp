@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h>
+
 using namespace std;
 
 /*Realizar la implementación de una pila utilizando un vector como espacio de
