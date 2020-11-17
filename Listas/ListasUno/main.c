@@ -6,12 +6,6 @@ typedef struct{
     struct Nodo* siguiente;
 }Nodo;
 
-typedef struct{
-   char nombreApellido[36];
-   int legajo;
-   int division;
-}Alumno;
-
 void create(Nodo**);
 Nodo* insertarPrimero(Nodo** , int);
 Nodo* insertarAlFinal(Nodo**, int);
@@ -115,6 +109,7 @@ void borrarLista(Nodo** lista){
     Nodo* listaAux = NULL;
     while(listaAux != NULL){
         listaAux = *lista;
+        printf("%d\n", listaAux->dato);
         *lista = (*lista)->siguiente;
         free(listaAux);
     }

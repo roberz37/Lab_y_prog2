@@ -1,0 +1,172 @@
+//ESTRUCTURA DE LA LISTA
+typedef struct{
+    int dato;
+    struct Nodo* siguiente;
+}Nodo;
+
+//CREAR LISTA
+void crear(Nodo** lista){
+    *lista = NULL;
+}
+
+//INSERTAR AL PRINCIPIO
+Nodo* insertarPrimero(Nodo** lista, int dato){
+    Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = *lista;
+    *lista = nodo;
+    return nodo;
+}
+
+//INSERTAR AL FINAL DE LA LISTA
+Nodo* insertarAlFinal(Nodo** lista, int dato){
+    Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = NULL;
+    Nodo* listaAux = *lista;
+    while(listaAux != NULL && listaAux->siguiente != NULL){
+        listaAux= listaAux->siguiente;
+    }
+    if(listaAux == NULL){
+        *lista = nodo;
+    } else {
+        listaAux->siguiente = nodo;
+    }
+    return nodo;
+}
+
+//INSERTAR ORDENADO EN LA LISTA
+
+Nodo* insertarOrdenado(Nodo** lista, int dato){
+    Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = NULL;
+    Nodo* listaAux = *lista;
+    Nodo* listaAnt = NULL;
+    while(listaAux != NULL && dato < listaAux->dato){
+        listaAnt = listaAux;
+        listaAux = listaAux->siguiente;
+    }
+    if(listaAnt == NULL){
+        *lista = nodo;
+    }else{
+        listaAnt->siguiente = nodo;
+    }
+    nodo->siguiente = listaAux;
+    return nodo;
+}
+
+//BUSCAR EN LA LISTA
+
+Nodo* buscar(Nodo* lista, int buscado){
+    Nodo* listaAux = lista;
+    while(listaAux != NULL && listaAux->dato != buscado){
+        listaAux = listaAux->siguiente;
+    }
+    return listaAux;
+}
+
+//BORRA EL PRIMERO DE LA LISTA
+
+int borrarPrimero(Nodo** lista){
+    Nodo* listaAux = *lista;
+    *lista = (*lista)->siguiente;
+    int dato = listaAux->dato;
+    free(listaAux);
+    return dato;
+}
+
+//BORRAR DE UN DATO EN PARTICULAR
+
+int borrarDato(Nodo** lista, int dato){
+    Nodo* listaAux = *lista;
+    Nodo* listaAnt = NULL;
+    while(listaAux != NULL && listaAux->dato != dato){
+        listaAnt = listaAux;
+        listaAux = listaAux->siguiente;
+    }
+    if(listaAnt == NULL){
+        *lista = (*lista)->siguiente;
+    }else {
+        listaAnt->siguiente = listaAux->siguiente;
+    }
+    int valor = listaAux->dato;
+    free(listaAux);
+    return valor;
+}
+
+//BORRA E IMPRIME LA LISTA
+
+void borrarLista(Nodo** lista){
+    Nodo* listaAux = NULL;
+    while(listaAux != NULL){
+        listaAux = *lista;
+	printf("%d\n", listaAux->dato);
+        *lista = (*lista)->siguiente;
+        free(listaAux);
+    }
+}
+
+//ORDENA LA LISTA
+
+void ordenarLista(Nodo** lista){
+    Nodo* listaAux = NULL;
+    int dato = 0;
+    while(*lista != NULL){
+        dato = borrarPrimero(lista);
+        insertarOrdenado(&listaAux, dato);
+    }
+    *lista = listaAux;
+}
+
+//INSERTAR SIN DUPLICADOS EN LA LISTA
+
+Nodo* insertarSinDuplicados(Nodo** lista, int dato){
+    Nodo* nodo = search(*lista, dato);
+    if(nodo == NULL){
+        nodo = insertarOrdenado(lista, dato);
+    }
+    return nodo;
+}
+
+//INSERTAR EN POSICION INDICADA
+
+Nodo* insertarEn(Nodo** lista, int dato, int posicion){
+    Nodo* listaAux = *lista;
+    Nodo* listaAnt = NULL;
+    Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = NULL;
+    for(int i = 0; i < posicion && *lista != NULL; i++){
+        listaAnt = listaAux;
+        listaAux = listaAux->siguiente;
+    }
+    if(listaAnt == NULL){
+        *lista = nodo;
+    } else {
+        listaAnt->siguiente = nodo;
+    }
+    nodo->siguiente = listaAux;
+    return nodo;
+}
+
+//LEER UN DATO EN LA POSICION INDICADA
+
+Nodo* insertarEn(Nodo** lista, int dato, int posicion){
+    Nodo* listaAux = *lista;
+    Nodo* listaAnt = NULL;
+    Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = NULL;
+    for(int i = 0; i < posicion && *lista != NULL; i++){
+        listaAnt = listaAux;
+        listaAux = listaAux->siguiente;
+    }
+    if(listaAnt == NULL){
+        *lista = nodo;
+    } else {
+        listaAnt->siguiente = nodo;
+    }
+    nodo->siguiente = listaAux;
+    return nodo;
+}

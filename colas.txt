@@ -1,0 +1,48 @@
+//ESTRUCTURA DEL NODO
+
+typedef struct Nodo{
+    int dato;
+    struct Nodo *siguiente;//SIN STRUCT EN C++
+}Nodo;
+
+//ESTRUCTURA DE LA COLA QUE CONTIENE NODOS WE
+typedef struct {
+    Nodo *primero;
+    Nodo *ultimo;
+}Cola;
+
+//CREACION DE UNA COLA
+void create(Cola *cola){
+    cola->primero = NULL;
+    cola->ultimo = NULL;
+}
+
+//PREGUNTA SI ESTA VACIA LA COLA
+bool isEmpty(Cola *cola){
+    return cola->primero == NULL && cola->ultimo == NULL;
+}
+
+//AGREGAR UN NODO A LA COLA
+void add(Cola *cola, int dato){
+    Nodo *nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = NULL;
+    if(cola->primero == NULL){
+        cola->primero = nodo;
+    } else {
+        cola->ultimo->siguiente = nodo;
+    }
+    cola->ultimo = nodo;
+}
+
+//REMUEVE UN NODO DE LA COLA
+int remover(Cola *cola){
+    Nodo *nodo = cola->primero;
+    int valor = nodo->dato;
+    cola->primero = nodo->siguiente;
+    if(cola->primero == NULL){
+        cola->ultimo = NULL;
+    }
+    free(nodo);
+    return valor;
+}

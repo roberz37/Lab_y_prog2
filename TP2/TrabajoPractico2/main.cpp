@@ -2,20 +2,9 @@
 
 using namespace std;
 
-typedef struct{
-    int legajo;
-    float promedio;
-}Alumno;
-
-typedef struct{
-    int parcial;
-    char fecha[11];
-    int legajo;
-    int nota;
-}Materia;
 
 typedef struct Nodo{
-    Materia materia;
+    int dato;
     Nodo* siguiente;
 }Nodo;
 
@@ -47,6 +36,7 @@ int main(){
 void create(Nodo** lista){
     *lista = NULL;
 }
+
 void ordenarPorLegajo(Nodo** lista, FILE* asignatura){
     Materia materia;
     while(fscanf(asignatura, "%d\t%s\t%d\t%d\n" , &materia.parcial, materia.fecha, &materia.legajo, &materia.nota) != EOF){
@@ -89,6 +79,7 @@ void borrarLista(Nodo** lista){
     Nodo* listaAux = NULL;
     while(listaAux != NULL){
         listaAux = *lista;
+        printf("%d\n", listaAux->dato);
         *lista = (*lista)->siguiente;
         free(listaAux);
     }

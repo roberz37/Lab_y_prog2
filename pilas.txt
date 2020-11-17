@@ -1,0 +1,48 @@
+ESTRUCTURA DEL NODO
+
+typedef struct Nodo{//SI USAS C++ SIN PONER EL NODO CREO QUE FUNCA
+    int dato;
+    struct Nodo* siguiente;//SI USAS C++ SIN STRUCT
+}Nodo;
+
+CREACION DE UNA PILA
+
+Nodo* create(){
+    return NULL;
+}
+
+PREGUNTA SI ESTA VACIO
+
+bool isEmpty(Nodo *pila){
+    return pila == NULL;
+}
+
+
+AGREGA UN NODO A LA PILA
+
+void push(Nodo **pila, int dato){
+    Nodo *nodo = (Nodo*)malloc(sizeof(Nodo));
+    nodo->dato = dato;
+    nodo->siguiente = *pila;
+    *pila = nodo;
+}
+
+
+REMUEVE UN NODO DE LA PILA(CUAL? NO SE, SIEMPRE ME PREGUNTO SI ES EL PRIMERO, EL ULTIMO)
+
+int pop(Nodo **pila){
+    int valor = (*pila)->dato;
+    Nodo *aux = *pila;
+    *pila = (*pila)->siguiente;
+    free(aux);
+    return valor;
+}
+
+DESTRUYE LA PILA Y LA IMPRIME
+
+void clear(Nodo **pila){
+    while(!isEmpty(*pila)){
+        printf("%d\n", pop(pila);
+    }
+    *pila = NULL;
+}

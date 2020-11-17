@@ -2,9 +2,6 @@
 
 using namespace std;
 
-/*Realizar la implementación de una pila utilizando un vector como espacio de
-almacenamiento. Realizar las funciones conocidas para la estructura (push, pop,
-etc.) y luego hacer un programa que cargue N valores aleatorios y los imprima.*/
 int pop(int[], int);
 bool isEmpty(int[]);
 void push(int[], int, int);

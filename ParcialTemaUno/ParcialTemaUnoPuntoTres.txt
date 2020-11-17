@@ -1,0 +1,1 @@
+Es posible implementar un archivo como pila, pero costaria mucho trabajo de disco reacomodar el archivo por cada operacion de agregar o remover, con seek podrias moverte al principio o al final
