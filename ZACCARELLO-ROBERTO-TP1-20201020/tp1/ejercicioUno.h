@@ -1,0 +1,6 @@
+#ifndef EJERCICIOUNO_H_INCLUDED
+#define EJERCICIOUNO_H_INCLUDED
+
+void generarArchivosUsuarios(FILE*, FILE*, FILE*);
+
+#endif // EJERCICIOUNO_H_INCLUDED

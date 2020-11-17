@@ -1,0 +1,7 @@
+#ifndef EJERCICIODOS_H_INCLUDED
+#define EJERCICIODOS_H_INCLUDED
+
+ST_USUARIO getUser (FILE*);
+void login(FILE*);
+
+#endif // EJERCICIODOS_H_INCLUDED

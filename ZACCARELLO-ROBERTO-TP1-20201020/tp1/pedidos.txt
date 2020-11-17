@@ -1,0 +1,9 @@
+Email		Nombre			Cantidad	Total
+a@gmail.com	roberto carlos			4	350.00
+b@gmail.com	ignacio			7	260.00
+c@gmail.com	carlos d luffy			1	100.00
+e@gmail.com	tobias cba			10	150.00
+f@gmail.com	natalia			1	70.00
+g@gmail.com	maria ortiz			10	100.00
+h@gmail.com	nicolas			13	720.00
+i@gmail.com	pancho dot			4	320.00

@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1605035413 source:/home/roberz/ZACCARELLO-ROBERTO-TP2-fecha/Ejercicio3/ejercicio3.cpp
+	<iostream>
+	"ejercicio3.h"
+
+1605035308 /home/roberz/ZACCARELLO-ROBERTO-TP2-fecha/Ejercicio3/ejercicio3.h
+
+1605035385 source:/home/roberz/ZACCARELLO-ROBERTO-TP2-fecha/Ejercicio3/main.cpp
+	<iostream>
+	"ejercicio3.h"
+

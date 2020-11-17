@@ -16,5 +16,10 @@ int main()
     return 0;
 }
 
+
+
+
+
+
 bool inversa ()
 

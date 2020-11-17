@@ -1,0 +1,4 @@
+Es posible implementar el funcionamiento de una cola. Poder lograr esto requeriria de muchas
+E/S a disco para poder utilizar las funciones de add y/o remover.
+
+Para lograr esto se debe utilizar mucho el seek_set. Posicionandolo en el principio del archivo o el final segun la funcion lo requiera. agregar, seria sencillo pues solo lo hace posicionandonos al final. El remove, deberiamos leer la primer posicison y reordenar las demas posiciones.

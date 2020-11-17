@@ -1,0 +1,102 @@
+ABRIR
+
+FILE *abrir(const char *fileName, const char *modo){
+    FILE *file = fopen(fileName, modo);
+    if (file == NULL){
+        fprintf(stderr, "No se pudo abrir el archivo: %s", fileName);
+        exit(EXIT_FAILURE);
+    }
+    return file;
+}
+
+CREAR ARCHIVO TXT
+
+void cargarTxt (){
+
+    ST_VARIABLE variable;
+    FILE *archivo = fopen("CURSO.TXT","w");
+
+    if(archivo == NULL){
+        printf("No se pudo abrir el archivo!");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Ingrese el legajo: \n");
+    scanf("%d", &alumno.legajo);
+
+    while(variable.propUno > 0){
+        printf("Ingrese una nota: \n");
+        scanf("%d", &variable.propUno);
+        printf("Ingrese una nota: \n");
+        scanf("%d", &variablea.propDos);
+        fprintf(archivo,"%08d %.2f\n", variable.propUno, variable.propDos);
+        printf("Ingrese el legajo: \n");
+        scanf("%d", &variable.propUno);
+    }
+    fclose(archivo);
+}
+
+IMPRIMIR ARCHIVO TXT(con condicion)
+
+void imprimirTxt (FILE* archivo){
+     Struct nombreStruc;
+     while(fscanf(archivoUno, "%d%f\n", &nombreStruct.propUno, &nombreStruct.propDos) != EOF){
+        if(nombreStruct.propDos >= 6){
+            fprintf(archivoDos, "%08d %.2f\n", nombreStruct.propUno, nombreStruct.propDos);
+        }
+    }
+
+}
+
+
+CARGAR ARCHIVO DAT
+
+void cargarDat(){
+    ST_VARIABLE variable;
+    FILE *archivo = fopen("CURSO.TXT","w");
+
+    if(archivo == NULL){
+        printf("No se pudo abrir el archivo!");
+        exit(EXIT_FAILURE);
+    }
+
+    
+    printf("Ingrese el email\n");
+    gets(pedido.email);
+    int cantSolicitada;
+    while(strcmp(pedido.email, "") != 0){
+        printf("Ingrese id del producto\n");
+        scanf("%d", &pedido.idProd);
+        printf("Ingrese el valor unitario\n");
+        scanf("%f", &pedido.valorUnitario);
+        printf("Ingrese la cantidad solicitada\n");
+        scanf("%d", &cantSolicitada);
+        pedido.cantSolicitada = cantSolicitada;
+        fwrite(&pedido, sizeof(PedidosDat), 1, fileOrdersBin);
+        discardChars();
+        printf("Ingrese el email\n");
+        gets(pedido.email);
+     }
+	fclose(fileordersBin);
+
+}
+
+
+IMPRIMIR ARCHIVO DAT
+
+void imprimirDat(FILE* archivo){
+   
+    fseek(archivo, 0, SEEK_SET);
+    fread(&alumno, sizeof(Struct), 1, archivo);
+    while(!feof(archivo)){
+        printf("Legajo: %d, Materia: %d, %d/%d/%d, Nombre: %s\n", alumno.legajo, alumno.materia, alumno.dia, alumno.mes, alumno.anio, alumno.nombre);
+        fread(&alumno, sizeof(Struct), 1, archivo);
+    }
+}
+
+
+
+
+
+
+

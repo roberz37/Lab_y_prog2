@@ -1,0 +1,181 @@
+# depslib dependency file v1.0
+1601323342 source:/home/roberz/TP1/tp1/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioUno.h"
+	"ejercicioDos.h"
+	"ejercicioTres.h"
+	"ejercicioCuatro.h"
+
+1601322710 source:/home/roberz/TP1/tp1/herramientas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+
+1601323959 /home/roberz/TP1/tp1/herramientas.h
+
+1601323297 /home/roberz/TP1/tp1/ejercicioUno.h
+
+1601321353 source:/home/roberz/TP1/tp1/ejercicioUno.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioUno.h"
+
+1601323522 source:/home/roberz/TP1/tp1/ejercicioDos.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioDos.h"
+
+1601323328 /home/roberz/TP1/tp1/ejercicioDos.h
+
+1601321813 source:/home/roberz/TP1/tp1/ejercicioTres.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioTres.h"
+
+1601321772 /home/roberz/TP1/tp1/ejercicioTres.h
+
+1601323273 source:/home/roberz/TP1/tp1/ejercicioCuatro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioTres.h"
+
+1601322958 /home/roberz/TP1/tp1/ejercicioCuatro.h
+
+1603204709 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioUno.h"
+	"ejercicioDos.h"
+	"ejercicioTres.h"
+	"ejercicioCuatro.h"
+
+1602509081 /home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/herramientas.h
+
+1601323297 /home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioUno.h
+
+1601323328 /home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioDos.h
+
+1601486550 /home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioTres.h
+
+1601322958 /home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioCuatro.h
+
+1601323273 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioCuatro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioTres.h"
+
+1602652184 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioDos.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioDos.h"
+
+1603205694 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioTres.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioTres.h"
+
+1602697346 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/ejercicioUno.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioUno.h"
+
+1602652486 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20200928/tp1/herramientas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+
+1601323273 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioCuatro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioTres.h"
+
+1602509081 /home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/herramientas.h
+
+1601486550 /home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioTres.h
+
+1602652184 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioDos.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioDos.h"
+
+1601323328 /home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioDos.h
+
+1603244725 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioTres.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioTres.h"
+
+1602697346 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioUno.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioUno.h"
+
+1601323297 /home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioUno.h
+
+1602652486 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/herramientas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+
+1603204709 source:/home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"herramientas.h"
+	"ejercicioUno.h"
+	"ejercicioDos.h"
+	"ejercicioTres.h"
+	"ejercicioCuatro.h"
+
+1601322958 /home/roberz/ZACCARELLO-ROBERTO-TP1-20201020/tp1/ejercicioCuatro.h
+

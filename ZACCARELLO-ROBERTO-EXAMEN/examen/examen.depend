@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1605052831 source:/home/roberz/ZACCARELLO-ROBERTO-EXAMEN/examen/main.cpp
+	<iostream>
+	"string.h"
+
