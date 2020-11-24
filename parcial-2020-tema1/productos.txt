@@ -1,0 +1,50 @@
+11365325;Crema de almejas;9.65;85
+12890282;Azucar negra Malacca;19.45;27
+13144389;Licor verde Chartreuse;18.00;69
+13202378;Postre de merengue;17.45;29
+14438966;Chocolate blanco;16.25;65
+15044923;Salchicha Thuringer;123.79;0
+17268200;Tallarines de Singapur;14.00;26
+10689878;Refresco Guarana;4.50;20
+12698338;Pastas de te;9.20;25
+13988652;Col fermentada Rossle;45.60;26
+15475643;Salsa de arandanos;40.00;6
+17340445;Pan fino;9.00;61
+22037914;Buey Mishi Kobe;97.00;29
+24370235;Cordero Alice Springs;39.00;0
+25037711;Vino Cote de Blaye;263.50;17
+26721959;Langostinos tigre;62.50;42
+28449542;Queso Cabrales;21.00;22
+28828113;Cafe de Malasia;46.00;17
+30666369;Queso de cabra;2.50;12
+38420257;Galletas Zaanse;9.50;36
+39039802;Arenque ahumado;9.50;5
+44664129;Queso Mascarpone;32.00;9
+47208912;Algas Konbu;6.00;24
+49794731;Sirope de regaliz;55.00;1
+51566920;Crema de chocolate;14.00;76
+55373322;Peras secas organicas;30.00;15
+62319009;Cerveza negra;18.00;20
+63246797;Queso Manchego;38.00;86
+65439756;Chocolate holandes;12.75;15
+65736716;Cerveza Sasquatch;14.00;111
+66713908;Arenque salado;12.00;95
+67316961;Especias Cajun;22.00;53
+68957342;Queso gorgonzola;12.50;0
+70440370;Arenque blanco;25.89;10
+71136477;Carne de cangrejo;18.40;123
+73595989;Pez espada;31.00;31
+74908657;Chocolate Schoggi;43.90;49
+75610994;Mermelada de Sir Rodney s;81.00;40
+76336219;Salmon ahumado;26.00;11
+77966173;Bollos de Sir Rodney s;10.00;3
+77973943;Escabeche de;19.00;112
+79093068;Regaliz;20.00;10
+81813723;Pan de centeno;21.00;104
+82420837;Mermelada de grosellas;25.00;120
+84638063;Salsa de soja;15.50;39
+87515569;Cuajada de vanias;23.25;35
+91032325;Ositos de goma;31.23;15
+91614338;Mezcla Gumbo del chef Anton;21.35;0
+92542992;Te Dharamsala;18.00;39
+97093951;Cerveza tibetana;19.00;17

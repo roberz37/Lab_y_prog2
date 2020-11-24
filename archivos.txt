@@ -1,4 +1,12 @@
-ABRIR
+1) ABRIR.......................... 9
+2) CREAR ARCHIVO TXT.............. 20
+3) IMPRIMIR ARCHIVO TXT........... 47
+4) CARGAR ARCHIVO DAT............. 60
+5) IMPRIMIR ARCHIVO DAT........... 93
+6) GENERAR ARCHIVO.DAT DE UN TXT.. 105
+7) APAREO DE ARCHIVOS..............128
+
+1)ABRIR
 
 FILE *abrir(const char *fileName, const char *modo){
     FILE *file = fopen(fileName, modo);
@@ -9,7 +17,7 @@ FILE *abrir(const char *fileName, const char *modo){
     return file;
 }
 
-CREAR ARCHIVO TXT
+2) CREAR ARCHIVO TXT
 
 void cargarTxt (){
 
@@ -36,7 +44,7 @@ void cargarTxt (){
     fclose(archivo);
 }
 
-IMPRIMIR ARCHIVO TXT(con condicion)
+3)IMPRIMIR ARCHIVO TXT(con condicion)
 
 void imprimirTxt (FILE* archivo){
      Struct nombreStruc;
@@ -49,7 +57,7 @@ void imprimirTxt (FILE* archivo){
 }
 
 
-CARGAR ARCHIVO DAT
+4)CARGAR ARCHIVO DAT
 
 void cargarDat(){
     ST_VARIABLE variable;
@@ -82,7 +90,7 @@ void cargarDat(){
 }
 
 
-IMPRIMIR ARCHIVO DAT
+5)IMPRIMIR ARCHIVO DAT
 
 void imprimirDat(FILE* archivo){
    
@@ -94,8 +102,64 @@ void imprimirDat(FILE* archivo){
     }
 }
 
+6)GENERAR ARCHIVO .DAT CON UN .TXT
 
+void generarArchivo(const char *entrada, const char *salida) {
+    FILE *fileTxt = abrir(entrada, "r");
+    FILE *fileBin = abrir(salida, "wb");
+    STR_PRODUCTO registro;
+    char buffer[250];
+    fgets(buffer, 250, fileTxt);
+    while(!feof(fileTxt)) {
+        registro.codigo = atoi(strtok(buffer, ";"));
+        strcpy(registro.descripcion,strtok(NULL, ";"));
+        strcat(registro.descripcion,"\0");
+        registro.precio = atof(strtok(NULL, ";"));
+        registro.stock = atoi(strtok(NULL, "\n;"));
 
+        fwrite(&registro, sizeof(STR_PRODUCTO), 1, fileBin);
+        fgets(buffer, 250, fileTxt);
+    }
+    cerrar(fileTxt);
+    cerrar(fileBin);
+    return;
+}
+
+7)APAREO DE ARCHIVOS
+
+void apareoArchivos(const char *vtasEstacion1, const char *vtasEstacion2, const char *unificadas) {
+    FILE *fileVtasEst1 = abrir(vtasEstacion1, "rb");
+    FILE *fileVtasEst2 = abrir(vtasEstacion2, "rb");
+    FILE *fileUnificadas = abrir(unificadas, "wb");
+
+    STR_VENTA ventaEst1;
+    STR_VENTA ventaEst2;
+    leer(fileVtasEst1, &ventaEst1);
+    leer(fileVtasEst2, &ventaEst2);
+    while(!feof(fileVtasEst1) && !feof(fileVtasEst2)) {
+        if (compararFechas(ventaEst1.fecha, ventaEst2.fecha) < 0) { //Compara que fecha es menor
+            escribir(ventaEst1, fileUnificadas);
+            leer(fileVtasEst1, &ventaEst1);
+        } else {
+            escribir(ventaEst2, fileUnificadas);
+            leer(fileVtasEst2, &ventaEst2);
+        }
+    }
+
+    while(!feof(fileVtasEst1)) {
+        escribir(ventaEst1, fileUnificadas);
+        leer(fileVtasEst1, &ventaEst1);
+    }
+
+    while(!feof(fileVtasEst2)) {
+        escribir(ventaEst2, fileUnificadas);
+        leer(fileVtasEst2, &ventaEst1);
+    }
+    cerrar(fileVtasEst1);
+    cerrar(fileVtasEst2);
+    cerrar(fileUnificadas);
+    return;
+}
 
 
 

@@ -1,28 +1,36 @@
-//ESTRUCTURA DEL NODO
+1) ESTRUCTURA NODO..... 9
+2) ESTRUCTURA COLA..... 16
+3) CREAR COLA.......... 22
+4) IS EMPTY............ 28
+5) ADD................. 33
+6) REMOVE.............. 46
+
+
+1) ESTRUCTURA DEL NODO
 
 typedef struct Nodo{
     int dato;
     struct Nodo *siguiente;//SIN STRUCT EN C++
 }Nodo;
 
-//ESTRUCTURA DE LA COLA QUE CONTIENE NODOS WE
+2) ESTRUCTURA DE LA COLA QUE CONTIENE NODOS WE
 typedef struct {
     Nodo *primero;
     Nodo *ultimo;
 }Cola;
 
-//CREACION DE UNA COLA
+3) CREACION DE UNA COLA
 void create(Cola *cola){
     cola->primero = NULL;
     cola->ultimo = NULL;
 }
 
-//PREGUNTA SI ESTA VACIA LA COLA
+4) PREGUNTA SI ESTA VACIA LA COLA
 bool isEmpty(Cola *cola){
     return cola->primero == NULL && cola->ultimo == NULL;
 }
 
-//AGREGAR UN NODO A LA COLA
+5) AGREGAR UN NODO A LA COLA
 void add(Cola *cola, int dato){
     Nodo *nodo = (Nodo*)malloc(sizeof(Nodo));
     nodo->dato = dato;
@@ -35,7 +43,7 @@ void add(Cola *cola, int dato){
     cola->ultimo = nodo;
 }
 
-//REMUEVE UN NODO DE LA COLA
+6) REMUEVE UN NODO DE LA COLA
 int remover(Cola *cola){
     Nodo *nodo = cola->primero;
     int valor = nodo->dato;
