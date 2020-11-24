@@ -52,6 +52,23 @@ void push(NodoPila **pila, char* palabra){
     *pila = nodo;
 }
 
+
+/*
+typedef struct{
+    char dato[50];
+    Nodo* siguiente;
+}str_nodo;
+
+void push(char* valor, str_nodo **pila){
+    str_nodo * nodo= (str_nodo*) malloc(sizeof(char)*50);
+    strcpy(nodo->dato, valor);
+    nodo->siguiente = *pila;
+    *pila = nodo;
+}
+
+
+    */
+
 char* pop(NodoPila **pila){
     char* palabra = (*pila)->palabra;
     NodoPila *aux = *pila;
