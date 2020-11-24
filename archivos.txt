@@ -94,7 +94,28 @@ void imprimirDat(FILE* archivo){
     }
 }
 
+GENERAR ARCHIVO .DAT CON UN .TXT
 
+void generarArchivo(const char *entrada, const char *salida) {
+    FILE *fileTxt = abrir(entrada, "r");
+    FILE *fileBin = abrir(salida, "wb");
+    STR_PRODUCTO registro;
+    char buffer[250];
+    fgets(buffer, 250, fileTxt);
+    while(!feof(fileTxt)) {
+        registro.codigo = atoi(strtok(buffer, ";"));
+        strcpy(registro.descripcion,strtok(NULL, ";"));
+        strcat(registro.descripcion,"\0");
+        registro.precio = atof(strtok(NULL, ";"));
+        registro.stock = atoi(strtok(NULL, "\n;"));
+
+        fwrite(&registro, sizeof(STR_PRODUCTO), 1, fileBin);
+        fgets(buffer, 250, fileTxt);
+    }
+    cerrar(fileTxt);
+    cerrar(fileBin);
+    return;
+}
 
 
 
