@@ -1,15 +1,29 @@
-//ESTRUCTURA DE LA LISTA
+1) ESTRUCTURA.......................... 15
+2) CREAR............................... 21
+3) INSERTAR AL PRINCIPIO............... 26
+4) INSERTAR AL FINAL................... 35
+5) INSERTAR ORDENADO................... 52
+6) BUSCAR EN LA LISTA.................. 73
+7) BORRA EL PRIMERO.................... 83
+8) BORRAR UN DATO...................... 93
+9) BORRAR E IMPRIMIR LA LISTA.......... 112
+10) ORDENAR LISTA...................... 124
+11) INSERTAR SIN DUPLICADO............. 136
+12) INSERTAR EN POSICION............... 146
+13) LEER EN POSICION................... 167
+
+1) ESTRUCTURA DE LA LISTA
 typedef struct{
     int dato;
     struct Nodo* siguiente;
 }Nodo;
 
-//CREAR LISTA
+2) CREAR LISTA
 void crear(Nodo** lista){
     *lista = NULL;
 }
 
-//INSERTAR AL PRINCIPIO
+3) INSERTAR AL PRINCIPIO
 Nodo* insertarPrimero(Nodo** lista, int dato){
     Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
     nodo->dato = dato;
@@ -18,7 +32,7 @@ Nodo* insertarPrimero(Nodo** lista, int dato){
     return nodo;
 }
 
-//INSERTAR AL FINAL DE LA LISTA
+4) INSERTAR AL FINAL DE LA LISTA
 Nodo* insertarAlFinal(Nodo** lista, int dato){
     Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
     nodo->dato = dato;
@@ -35,7 +49,7 @@ Nodo* insertarAlFinal(Nodo** lista, int dato){
     return nodo;
 }
 
-//INSERTAR ORDENADO EN LA LISTA
+5) INSERTAR ORDENADO EN LA LISTA
 
 Nodo* insertarOrdenado(Nodo** lista, int dato){
     Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
@@ -56,7 +70,7 @@ Nodo* insertarOrdenado(Nodo** lista, int dato){
     return nodo;
 }
 
-//BUSCAR EN LA LISTA
+6) BUSCAR EN LA LISTA
 
 Nodo* buscar(Nodo* lista, int buscado){
     Nodo* listaAux = lista;
@@ -66,7 +80,7 @@ Nodo* buscar(Nodo* lista, int buscado){
     return listaAux;
 }
 
-//BORRA EL PRIMERO DE LA LISTA
+7) BORRA EL PRIMERO DE LA LISTA
 
 int borrarPrimero(Nodo** lista){
     Nodo* listaAux = *lista;
@@ -76,7 +90,7 @@ int borrarPrimero(Nodo** lista){
     return dato;
 }
 
-//BORRAR DE UN DATO EN PARTICULAR
+8) BORRAR DE UN DATO EN PARTICULAR
 
 int borrarDato(Nodo** lista, int dato){
     Nodo* listaAux = *lista;
@@ -95,7 +109,7 @@ int borrarDato(Nodo** lista, int dato){
     return valor;
 }
 
-//BORRA E IMPRIME LA LISTA
+9) BORRA E IMPRIME LA LISTA
 
 void borrarLista(Nodo** lista){
     Nodo* listaAux = NULL;
@@ -107,7 +121,7 @@ void borrarLista(Nodo** lista){
     }
 }
 
-//ORDENA LA LISTA
+10) ORDENA LA LISTA
 
 void ordenarLista(Nodo** lista){
     Nodo* listaAux = NULL;
@@ -119,7 +133,7 @@ void ordenarLista(Nodo** lista){
     *lista = listaAux;
 }
 
-//INSERTAR SIN DUPLICADOS EN LA LISTA
+11) INSERTAR SIN DUPLICADOS EN LA LISTA
 
 Nodo* insertarSinDuplicados(Nodo** lista, int dato){
     Nodo* nodo = search(*lista, dato);
@@ -129,7 +143,7 @@ Nodo* insertarSinDuplicados(Nodo** lista, int dato){
     return nodo;
 }
 
-//INSERTAR EN POSICION INDICADA
+12) INSERTAR EN POSICION INDICADA
 
 Nodo* insertarEn(Nodo** lista, int dato, int posicion){
     Nodo* listaAux = *lista;
@@ -150,7 +164,7 @@ Nodo* insertarEn(Nodo** lista, int dato, int posicion){
     return nodo;
 }
 
-//LEER UN DATO EN LA POSICION INDICADA
+13) LEER UN DATO EN LA POSICION INDICADA
 
 Nodo* insertarEn(Nodo** lista, int dato, int posicion){
     Nodo* listaAux = *lista;

@@ -1,4 +1,12 @@
-ABRIR
+1) ABRIR.......................... 9
+2) CREAR ARCHIVO TXT.............. 20
+3) IMPRIMIR ARCHIVO TXT........... 47
+4) CARGAR ARCHIVO DAT............. 60
+5) IMPRIMIR ARCHIVO DAT........... 93
+6) GENERAR ARCHIVO.DAT DE UN TXT.. 105
+
+
+1)ABRIR
 
 FILE *abrir(const char *fileName, const char *modo){
     FILE *file = fopen(fileName, modo);
@@ -9,7 +17,7 @@ FILE *abrir(const char *fileName, const char *modo){
     return file;
 }
 
-CREAR ARCHIVO TXT
+2) CREAR ARCHIVO TXT
 
 void cargarTxt (){
 
@@ -36,7 +44,7 @@ void cargarTxt (){
     fclose(archivo);
 }
 
-IMPRIMIR ARCHIVO TXT(con condicion)
+3)IMPRIMIR ARCHIVO TXT(con condicion)
 
 void imprimirTxt (FILE* archivo){
      Struct nombreStruc;
@@ -49,7 +57,7 @@ void imprimirTxt (FILE* archivo){
 }
 
 
-CARGAR ARCHIVO DAT
+4)CARGAR ARCHIVO DAT
 
 void cargarDat(){
     ST_VARIABLE variable;
@@ -82,7 +90,7 @@ void cargarDat(){
 }
 
 
-IMPRIMIR ARCHIVO DAT
+5)IMPRIMIR ARCHIVO DAT
 
 void imprimirDat(FILE* archivo){
    
@@ -94,7 +102,7 @@ void imprimirDat(FILE* archivo){
     }
 }
 
-GENERAR ARCHIVO .DAT CON UN .TXT
+6)GENERAR ARCHIVO .DAT CON UN .TXT
 
 void generarArchivo(const char *entrada, const char *salida) {
     FILE *fileTxt = abrir(entrada, "r");

@@ -1,24 +1,32 @@
-ESTRUCTURA DEL NODO
+1) ESTRUCTURA.................. 9
+2) CREAR PILA.................. 16
+3) IS EMPTY.................... 22
+4) AGREGAR NODO A PILA......... 29
+5) REMUEVE NODO................ 39
+6) BORRAR E IMPRIMIR LA PILA... 49
+
+
+1) ESTRUCTURA DEL NODO
 
 typedef struct Nodo{//SI USAS C++ SIN PONER EL NODO CREO QUE FUNCA
     int dato;
     struct Nodo* siguiente;//SI USAS C++ SIN STRUCT
 }Nodo;
 
-CREACION DE UNA PILA
+2) CREACION DE UNA PILA
 
 Nodo* create(){
     return NULL;
 }
 
-PREGUNTA SI ESTA VACIO
+3) PREGUNTA SI ESTA VACIO
 
 bool isEmpty(Nodo *pila){
     return pila == NULL;
 }
 
 
-AGREGA UN NODO A LA PILA
+4) AGREGA UN NODO A LA PILA
 
 void push(Nodo **pila, int dato){
     Nodo *nodo = (Nodo*)malloc(sizeof(Nodo));
@@ -28,7 +36,7 @@ void push(Nodo **pila, int dato){
 }
 
 
-REMUEVE UN NODO DE LA PILA(CUAL? NO SE, SIEMPRE ME PREGUNTO SI ES EL PRIMERO, EL ULTIMO)
+5) REMUEVE UN NODO DE LA PILA(CUAL? NO SE, SIEMPRE ME PREGUNTO SI ES EL PRIMERO, EL ULTIMO)
 
 int pop(Nodo **pila){
     int valor = (*pila)->dato;
@@ -38,7 +46,7 @@ int pop(Nodo **pila){
     return valor;
 }
 
-DESTRUYE LA PILA Y LA IMPRIME
+6) DESTRUYE LA PILA Y LA IMPRIME
 
 void clear(Nodo **pila){
     while(!isEmpty(*pila)){
