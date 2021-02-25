@@ -111,11 +111,11 @@ int borrarDato(Nodo** lista, int dato){
 
 9) BORRA E IMPRIME LA LISTA
 
-void borrarLista(Nodo** lista){
-    Nodo* listaAux = NULL;
-    while(listaAux != NULL){
+void borrarLista(NodoLista** lista){
+    NodoLista* listaAux;
+    while(*lista != NULL){
         listaAux = *lista;
-	printf("%d\n", listaAux->dato);
+        printf("%s\n", listaAux->palabra);
         *lista = (*lista)->siguiente;
         free(listaAux);
     }
